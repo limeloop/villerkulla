@@ -7,7 +7,7 @@ const basePath = process.env.BASE_PATH || '';
 console.log('basePath:', basePath);
 const nextConfig: NextConfig = {
   /* config options here */
-  basePath,
+  assetPrefix: basePath+'/',
 };
 
 export default nextConfig;
