@@ -1,7 +1,6 @@
 "use client";
 import React, { useEffect, useState } from 'react';
 import { supabase } from '../supabaseClient'; // adjust the import to your client
-import { Session } from '@supabase/supabase-js';
 
 type ParticipantFormProps = {
   projectId: string;
@@ -10,7 +9,6 @@ type ParticipantFormProps = {
 export const ParticipantForm: React.FC<ParticipantFormProps> = ({ projectId }) => {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
-  const [session, setSession] = useState<Session|null>(null);
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
   const [loading, setLoading] = useState(false);
@@ -21,7 +19,6 @@ export const ParticipantForm: React.FC<ParticipantFormProps> = ({ projectId }) =
     supabase.auth.onAuthStateChange((event, session) => {
         console.log('event', event);
         console.log('session', session);
-       setSession(session);
     })
   }, []);
 
@@ -70,7 +67,9 @@ export const ParticipantForm: React.FC<ParticipantFormProps> = ({ projectId }) =
       setLastName('');
       setEmail('');
       setPhone('');
-    } catch (err: any) {
+     
+    } catch (err) {
+       // @ts-expect-error: Should expect error obj
       setError(err.message || 'Unknown error');
     } finally {
       setLoading(false);
