@@ -1,30 +1,10 @@
 // app/[slug]/page.tsx
 'use client'
 import parse, { DOMNode } from 'html-react-parser';
+import { Form } from './form';
 
-const Form = ({id}: {id: number}) => {
-     // fetch data json from supabase for website_forms with id;
-
-
-    const onSubmit = (e: any) => {
-           // submit data to supabase for website_forms with id;
-
-        e.preventDefault();
-        console.log('submit');
-    }   
-
-    return (
-        <div>
-            <h1>Form {id}</h1>
-            <label>First Name</label>
-            <input type="text" />
-            <button onClick={onSubmit}>Submit</button>
-        </div>
-    );
-}
 
 export default function Content({ html, css }: { html: any, css: any} ) {
-console.log(html);
 
 const options = {
     replace: (domNode: DOMNode) => {
