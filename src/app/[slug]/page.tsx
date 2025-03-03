@@ -1,6 +1,6 @@
 // app/[slug]/page.tsx
 import { supabase } from "@/supabaseClient"; 
-import Content from "./../components/content";
+import Content from "../../components/content";
 import { notFound } from 'next/navigation'
 
 
@@ -13,15 +13,13 @@ export const revalidate = 60;
 export default async function Page({ params }: { params: { slug: string } }) {
     const { slug } = await params;
   // `params.slug` corresponds to the dynamic segment in the URL, e.g. /about -> "about"
-    console.log(slug)
 
     const { data , error } = await supabase
     .from("website_pages")
     .select("*") // or whatever columns you need
     .eq('website_id', process.env.NEXT_PUBLIC_WEBSITE_ID)
-    .eq('slug', '/')
+    .eq('slug', slug)
     .single();
-    console.log(data)
  
   if(!data) notFound()
 
@@ -32,7 +30,6 @@ export default async function Page({ params }: { params: { slug: string } }) {
   }
 
 
-  console.log(data)
   let page = data.html.replace('<body','<div');
   page = page.replace('</body>','</div>');
 
