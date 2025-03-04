@@ -4,7 +4,7 @@ import { supabase } from "@/supabaseClient";
 import { useEffect, useState } from "react";
 import { FormInterpreter } from "./formInterpreter";
 
-export const Form = ({ id }: { id: number }) => {
+export const Form = ({ id, submission }: { id: number, submission?: any }) => {
   // fetch data json from supabase for website_forms with id;
   const [form, setForm] = useState<any>(null);
   const [loading, setLoading] = useState<boolean>(true);
@@ -38,7 +38,7 @@ export const Form = ({ id }: { id: number }) => {
       <br />
 
       <p>Form body:</p>
-      {form && form.data && <FormInterpreter form={form} schema={form.data.schema} />}
+      {form && form.data && <FormInterpreter form={form} schema={form.data.schema} submission={submission} />}
       <br />
 
       {/* {JSON.stringify(form.data, null, 2)} */}

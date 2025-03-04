@@ -103,3 +103,22 @@ export async function saveSubmission(
     */
   }
 }
+
+
+export async function fetchSubmission(id: string) {
+  try {
+    const { data, error } = await supabase
+      .from("participants")
+      .select(
+        `
+        *,
+        participants_meta(*)
+      `
+      ) // or whatever columns you need
+      .eq("id", id)
+      .single();
+    return data;
+  } catch (error) {
+    console.log("error", error);
+  }
+}

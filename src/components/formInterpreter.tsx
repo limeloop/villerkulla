@@ -6,23 +6,41 @@ import {
   useInterpreterStore,
 } from "@coltorapps/builder-react";
 import { TextFieldEntity } from "./textFieldEntity";
-import { FormEvent } from "react";
+import { FormEvent, use, useEffect, useState } from "react";
 import { EmailFieldEntity } from "./emailFieldEntity";
 import { formBuilder } from "@/app/types/formBuilder";
-import { saveSubmission } from "@/actions/formBuilder";
+import { fetchSubmission, saveSubmission } from "@/actions/formBuilder";
+import { useParams } from "next/navigation";
 
 type FormBuilderSchema = Schema<typeof formBuilder>;
 
 export function FormInterpreter(props: {
   form: any;
   schema: FormBuilderSchema;
+  submission?: any;
 }) {
   /*
   | We utilize the `useInterpreterStore` hook, which creates
   | an interpreter store for us. This store is used for filling
   | entities values based on a schema and builder definition.
   */
+  const [data, setData] = useState<any | null>(null);
+  const params = useParams();
+  const submissionId = params.submission_id as string;
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await fetchSubmission(submissionId);
+      if (data) {
+        setData(data);
+      }
+    };
+    fetchData();
+  }, [params, submissionId]);
+  console.log("data", data);
+
   const interpreterStore = useInterpreterStore(formBuilder, props.schema, {
+    initialData: props.submission,
     events: {
       /*
       | We use the `onEntityValueUpdated` event callback
