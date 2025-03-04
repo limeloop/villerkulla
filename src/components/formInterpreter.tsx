@@ -9,11 +9,14 @@ import { TextFieldEntity } from "./textFieldEntity";
 import { FormEvent } from "react";
 import { EmailFieldEntity } from "./emailFieldEntity";
 import { formBuilder } from "@/app/types/formBuilder";
-
+import { saveSubmission } from "@/actions/formBuilder";
 
 type FormBuilderSchema = Schema<typeof formBuilder>;
 
-export function FormInterpreter(props: { schema: FormBuilderSchema }) {
+export function FormInterpreter(props: {
+  form: any;
+  schema: FormBuilderSchema;
+}) {
   /*
   | We utilize the `useInterpreterStore` hook, which creates
   | an interpreter store for us. This store is used for filling
@@ -39,15 +42,14 @@ export function FormInterpreter(props: { schema: FormBuilderSchema }) {
     | with feedback on what needs to be corrected.
     */
     const validationResult = await interpreterStore.validateEntitiesValues();
-  
+
     if (validationResult.success) {
       /*
       | The schema is valid and can be sent to the server.
       | Alternatively you can use `validationResult.data`
       | instead of sending `FormData`.
       */
-      console.log("Save the users submitted data", validationResult.data);
-      // await saveSubmission(validationResult.data);
+      await saveSubmission(validationResult.data, props.form, props.schema);
     }
   }
 

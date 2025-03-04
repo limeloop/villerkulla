@@ -32,78 +32,13 @@ export const Form = ({ id }: { id: number }) => {
     fetchData();
   }, []);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setLoading(true);
-    setError(null);
-    setSuccess(false);
-
-    try {
-      // Insert into "participants" table
-      console.log(form);
-
-      const { data: participantData, error: participantError } = await supabase
-        .from("participants")
-        .insert({
-          website_id: process.env.NEXT_PUBLIC_WEBSITE_ID,
-          project_id: form.project_id,
-          form_id: id,
-        })
-        .select();
-      console.log(participantData);
-      console.log(participantError);
-      if (
-        participantError ||
-        !participantData ||
-        participantData.length === 0
-      ) {
-        throw new Error(
-          participantError?.message || "Error inserting participant"
-        );
-      }
-
-      // Get the inserted participant id
-      const participantId = participantData[0].id;
-
-      // Prepare meta rows for each field
-      const metaRows = [
-        { participant_id: participantId, name: "first_name", value: "Jonas" },
-        { participant_id: participantId, name: "last_name", value: "Öström" },
-        {
-          participant_id: participantId,
-          name: "email",
-          value: "jonas.ostrom@limeloop.se",
-        },
-        { participant_id: participantId, name: "phone", value: "0702788238" },
-      ];
-
-      // Insert into "participants_meta" table
-      const { error: metaError } = await supabase
-        .from("participants_meta")
-        .insert(metaRows);
-
-      if (metaError) {
-        throw new Error(metaError.message);
-      }
-
-      setSuccess(true);
-      // Optionally, reset the form fields
-    } catch (err) {
-      console.log(err);
-      // @ts-expect-error: Should expect error obj
-      setError(err.message || "Unknown error");
-    } finally {
-      setLoading(false);
-    }
-  };
-
   return (
     <div>
       <h1>Form {id}</h1>
       <br />
 
       <p>Form body:</p>
-      {form && form.data && <FormInterpreter schema={form.data.schema} />}
+      {form && form.data && <FormInterpreter form={form} schema={form.data.schema} />}
       <br />
 
       {/* {JSON.stringify(form.data, null, 2)} */}
