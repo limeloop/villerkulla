@@ -10,7 +10,6 @@ export async function getFormSchema(id: number) {
     .select("data")
     .eq("id", id)
     .single();
-
   return schema;
 }
 
@@ -105,7 +104,7 @@ export async function saveSubmission(
   }
 }
 
-export async function fetchSubmission(id: string, formId: string) {
+export async function fetchSubmission(id: number, formId: number) {
   // Format to retrieve is
   // const initialData = {
   //   entitiesValues: {
@@ -125,6 +124,9 @@ export async function fetchSubmission(id: string, formId: string) {
     //   )
     //   .eq("id", id)
     //   .single();
+
+    console.log('fetching submission', id, formId)
+
     const { data, error } = await supabase
       .from("participants")
       .select(
@@ -136,13 +138,12 @@ export async function fetchSubmission(id: string, formId: string) {
       .eq("id", id)
       .eq("form_id", formId)
       .single();
-
     if (error) {
-      console.log("error", error);
+      console.log("fetch submission error", error);
       // throw new Error(error.message);
       return {};
     } else {
-      const entitiesValues = data.participants_meta.reduce((acc, entity) => {
+      const entitiesValues = data.participants_meta.reduce((acc: any, entity: any) => {
         acc[entity.field_id] = entity.value;
         return acc;
       }, {});

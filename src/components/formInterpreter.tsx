@@ -17,24 +17,31 @@ type FormBuilderSchema = Schema<typeof formBuilder>;
 export function FormInterpreter(props: {
   form: any;
   schema: FormBuilderSchema;
-  submission?: any;
+  initialData?: any;
 }) {
+  const { initialData } = props;
   /*
   | We utilize the `useInterpreterStore` hook, which creates
   | an interpreter store for us. This store is used for filling
   | entities values based on a schema and builder definition.
   */
-  const [initialData, setInitialData] = useState();
+  // const [initialData, setInitialData] = useState<any>();
   const params = useParams();
-  const submissionId = params.submission_id as string;
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const fetchedData = await fetchSubmission(submissionId, props.form.id);
-      if (fetchedData) setInitialData(fetchedData);
-    };
-    fetchData();
-  }, [submissionId, props.form.id, setInitialData]);
+  // useEffect(() => {
+  //   // if(initialData) return;
+
+  //   const fetchData = async () => {
+  //     const fetchedData = await fetchSubmission(submissionId, props.form.id);
+  //     console.log("Fetched data", fetchedData);
+  //     if (fetchedData) {
+  //       setInitialData(fetchedData);
+  //       interpreterStore.setData(fetchedData as any);
+  //     }
+
+  //   };
+  //   fetchData();
+  // }, [submissionId, props.form.id, setInitialData]);
 
   // const initialData = {
   //   entitiesValues: {
@@ -44,7 +51,7 @@ export function FormInterpreter(props: {
   //   },
   // };
   const interpreterStore = useInterpreterStore(formBuilder, props.schema, {
-    initialData,
+    initialData: initialData ? initialData : undefined,
     events: {
       /*
       | We use the `onEntityValueUpdated` event callback
@@ -74,7 +81,7 @@ export function FormInterpreter(props: {
       await saveSubmission(validationResult.data, props.form, props.schema);
     }
   }
-
+  console.log('initialData', initialData)
   return (
     <form
       onSubmit={(e) => {

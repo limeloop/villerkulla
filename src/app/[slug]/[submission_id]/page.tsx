@@ -10,7 +10,7 @@ import { notFound } from 'next/navigation'
 
 export const revalidate = 60; 
 
-export default async function Page({ params }: { params: { slug: string } }) {
+export default async function Page({ params }: { params: { slug: string, submission_id: string } }) {
   const { slug, submission_id } = await params;
 
   
@@ -41,5 +41,5 @@ export default async function Page({ params }: { params: { slug: string } }) {
   let page = data.html.replace('<body','<div');
   page = page.replace('</body>','</div>');
 
-  return (<><Content html={page} css={data.css} submission={undefined} /> </>)
+  return (<><Content html={page} css={data.css} submissionId={submission_id} /> </>)
 }

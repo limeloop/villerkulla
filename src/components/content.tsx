@@ -7,11 +7,11 @@ import { Form } from './form';
 export default function Content({
   html,
   css,
-  submission,
+  submissionId,
 }: {
   html: any;
   css: any;
-  submission?: any;
+  submissionId?: any;
 }) {
   const options = {
     replace: (domNode: DOMNode) => {
@@ -23,7 +23,7 @@ export default function Content({
 
         if (match && match[1]) {
           const formId = match[1]; // e.g. "3"
-          return <Form id={formId} submission={submission} />;
+          return <Form id={formId} submissionId={submissionId} />;
         }
       }
       // Return undefined for everything else, so it's left as-is
