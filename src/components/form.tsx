@@ -25,7 +25,7 @@ export const Form = ({ id, submission }: { id: number, submission?: any }) => {
         .select("*") // or whatever columns you need
         .eq("id", id)
         .single();
-      console.log(data);
+      // console.log(data);
       setForm(data);
       setLoading(false);
     };

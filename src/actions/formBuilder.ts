@@ -33,6 +33,7 @@ export async function saveSubmission(
   );
 
   if (validationResult.success) {
+    // console.log("Validation result data", validationResult.data);
     /*
     | The `validationResult.data` contains valid values
     | that can be stored in the database.
@@ -52,8 +53,8 @@ export async function saveSubmission(
           form_id: form.id,
         })
         .select();
-      console.log(participantData);
-      console.log(participantError);
+      // console.log(participantData);
+      // console.log(participantError);
       if (
         participantError ||
         !participantData ||
@@ -104,9 +105,26 @@ export async function saveSubmission(
   }
 }
 
-
-export async function fetchSubmission(id: string) {
+export async function fetchSubmission(id: string, formId: string) {
+  // Format to retrieve is
+  // const initialData = {
+  //   entitiesValues: {
+  //     "4ad5212e-444e-446f-ba3f-20048115b482": "Rodriguez",
+  //     "61e072ac-4d5d-4909-9576-dc5ab179c826": "Samuel",
+  //     "d5dfb78e-eb4a-4fea-ba62-ddee840d5e1a": "sam@mail.com",
+  //   },
+  // };
   try {
+    // const { data, error } = await supabase
+    //   .from("participants")
+    //   .select(
+    //     `
+    //     *,
+    //     participants_meta(*)
+    //   `
+    //   )
+    //   .eq("id", id)
+    //   .single();
     const { data, error } = await supabase
       .from("participants")
       .select(
@@ -114,10 +132,22 @@ export async function fetchSubmission(id: string) {
         *,
         participants_meta(*)
       `
-      ) // or whatever columns you need
+      )
       .eq("id", id)
+      .eq("form_id", formId)
       .single();
-    return data;
+
+    if (error) {
+      console.log("error", error);
+      // throw new Error(error.message);
+      return {};
+    } else {
+      const entitiesValues = data.participants_meta.reduce((acc, entity) => {
+        acc[entity.field_id] = entity.value;
+        return acc;
+      }, {});
+      return { entitiesValues };
+    }
   } catch (error) {
     console.log("error", error);
   }

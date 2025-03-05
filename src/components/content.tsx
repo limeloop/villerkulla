@@ -21,8 +21,6 @@ export default function Content({
         // Use a regex to match id="some_value"
         const match = data.match(/id="([^"]+)"/);
 
-        console.log("match", match);
-
         if (match && match[1]) {
           const formId = match[1]; // e.g. "3"
           return <Form id={formId} submission={submission} />;

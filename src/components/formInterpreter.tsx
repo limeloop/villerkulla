@@ -24,23 +24,27 @@ export function FormInterpreter(props: {
   | an interpreter store for us. This store is used for filling
   | entities values based on a schema and builder definition.
   */
-  const [data, setData] = useState<any | null>(null);
+  const [initialData, setInitialData] = useState();
   const params = useParams();
   const submissionId = params.submission_id as string;
 
   useEffect(() => {
     const fetchData = async () => {
-      const data = await fetchSubmission(submissionId);
-      if (data) {
-        setData(data);
-      }
+      const fetchedData = await fetchSubmission(submissionId, props.form.id);
+      if (fetchedData) setInitialData(fetchedData);
     };
     fetchData();
-  }, [params, submissionId]);
-  console.log("data", data);
+  }, [submissionId, props.form.id, setInitialData]);
 
+  // const initialData = {
+  //   entitiesValues: {
+  //     "4ad5212e-444e-446f-ba3f-20048115b482": "Rodriguez",
+  //     "61e072ac-4d5d-4909-9576-dc5ab179c826": "Samuel",
+  //     "d5dfb78e-eb4a-4fea-ba62-ddee840d5e1a": "sam@mail.com",
+  //   },
+  // };
   const interpreterStore = useInterpreterStore(formBuilder, props.schema, {
-    initialData: props.submission,
+    initialData,
     events: {
       /*
       | We use the `onEntityValueUpdated` event callback
@@ -85,13 +89,17 @@ export function FormInterpreter(props: {
       | components for each defined entity type in our form builder
       | (currently, it's only the text field).
       */}
-      <InterpreterEntities
-        interpreterStore={interpreterStore}
-        components={{
-          textField: TextFieldEntity,
-          emailField: EmailFieldEntity,
-        }}
-      />
+      {initialData ? (
+        <InterpreterEntities
+          interpreterStore={interpreterStore}
+          components={{
+            textField: TextFieldEntity,
+            emailField: EmailFieldEntity,
+          }}
+        />
+      ) : (
+        <div>Loading...</div>
+      )}
       <button type="submit">Submit</button>
     </form>
   );
