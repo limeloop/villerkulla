@@ -1,4 +1,4 @@
-import ParticipantForm from "@/components/testForm";
+import SubmissionForm from "@/components/testForm";
 import Link from "next/link";
 
 export default function Page() {

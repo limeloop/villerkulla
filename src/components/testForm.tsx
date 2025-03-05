@@ -2,11 +2,11 @@
 import React, { useEffect, useState } from 'react';
 import { supabase } from '../supabaseClient'; // adjust the import to your client
 
-type ParticipantFormProps = {
+type SubmissionFormProps = {
   projectId: string;
 };
 
-export const ParticipantForm: React.FC<ParticipantFormProps> = ({ projectId }) => {
+export const SubmissionForm: React.FC<SubmissionFormProps> = ({ projectId }) => {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
@@ -29,32 +29,32 @@ export const ParticipantForm: React.FC<ParticipantFormProps> = ({ projectId }) =
     setSuccess(false);
 
     try {
-      // Insert into "participants" table
-      const { data: participantData, error: participantError } = await supabase
-        .from('participants')
+      // Insert into "submissions" table
+      const { data: submissionData, error: submissionError } = await supabase
+        .from('submissions')
         .insert({
           project_id: projectId, // assuming your column name is "project_id"
         })
         .select();
 
-      if (participantError || !participantData || participantData.length === 0) {
-        throw new Error(participantError?.message || 'Error inserting participant');
+      if (submissionError || !submissionData || submissionData.length === 0) {
+        throw new Error(submissionError?.message || 'Error inserting submission');
       }
 
-      // Get the inserted participant id
-      const participantId = participantData[0].id;
+      // Get the inserted submission id
+      const submissionId = submissionData[0].id;
 
       // Prepare meta rows for each field
       const metaRows = [
-        { participant_id: participantId, meta_key: 'first_name', meta_value: firstName },
-        { participant_id: participantId, meta_key: 'last_name', meta_value: lastName },
-        { participant_id: participantId, meta_key: 'email', meta_value: email },
-        { participant_id: participantId, meta_key: 'phone', meta_value: phone },
+        { submission_id: submissionId, meta_key: 'first_name', meta_value: firstName },
+        { submission_id: submissionId, meta_key: 'last_name', meta_value: lastName },
+        { submission_id: submissionId, meta_key: 'email', meta_value: email },
+        { submission_id: submissionId, meta_key: 'phone', meta_value: phone },
       ];
 
-      // Insert into "participants_meta" table
+      // Insert into "submissions_meta" table
       const { error: metaError } = await supabase
-        .from('participants_meta')
+        .from('submissions_meta')
         .insert(metaRows);
 
       if (metaError) {
@@ -135,7 +135,7 @@ export const ParticipantForm: React.FC<ParticipantFormProps> = ({ projectId }) =
       </div>
 
       {error && <p className="text-red-500 mb-4">{error}</p>}
-      {success && <p className="text-green-500 mb-4">Participant added successfully!</p>}
+      {success && <p className="text-green-500 mb-4">Submission added successfully!</p>}
 
       <button
         type="submit"
@@ -148,4 +148,4 @@ export const ParticipantForm: React.FC<ParticipantFormProps> = ({ projectId }) =
   );
 };
 
-export default ParticipantForm;
+export default SubmissionForm;

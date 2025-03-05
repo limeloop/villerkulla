@@ -42,46 +42,46 @@ export async function saveSubmission(
     // setError(null);
     // setSuccess(false);
     try {
-      // Insert into "participants" table
+      // Insert into "submissions" table
       console.log("Form in saving", form);
-      const { data: participantData, error: participantError } = await supabase
-        .from("participants")
+      const { data: submissionData, error: submissionError } = await supabase
+        .from("submissions")
         .insert({
           website_id: process.env.NEXT_PUBLIC_WEBSITE_ID,
           project_id: form.project_id,
           form_id: form.id,
         })
         .select();
-      // console.log(participantData);
-      // console.log(participantError);
+      // console.log(submissionData);
+      // console.log(submissionError);
       if (
-        participantError ||
-        !participantData ||
-        participantData.length === 0
+        submissionError ||
+        !submissionData ||
+        submissionData.length === 0
       ) {
         throw new Error(
-          participantError?.message || "Error inserting participant"
+          submissionError?.message || "Error inserting submission"
         );
       }
-      // // Get the inserted participant id
-      const participantId = participantData[0].id;
+      // // Get the inserted submission id
+      const submissionId = submissionData[0].id;
       const entities = form.data.schema.entities;
       // Prepare meta rows for each field
       const metaRows = Object.entries(validationResult.data).map((value) => {
         const key = value[0];
         const val = value[1];
         return {
-          participant_id: participantId,
+          submission_id: submissionId,
           field_id: key,
           name: entities[key].attributes.label,
           value: val,
         };
       });
 
-      // Insert into "participants_meta" table
+      // Insert into "submissions_meta" table
       // console.log("inserting meta rows", metaRows);
       const { error: metaError } = await supabase
-        .from("participants_meta")
+        .from("submissions_meta")
         .insert(metaRows);
       if (metaError) {
         throw new Error(metaError.message);
@@ -115,11 +115,11 @@ export async function fetchSubmission(id: number, formId: number) {
   // };
   try {
     // const { data, error } = await supabase
-    //   .from("participants")
+    //   .from("submissions")
     //   .select(
     //     `
     //     *,
-    //     participants_meta(*)
+    //     submissions_meta(*)
     //   `
     //   )
     //   .eq("id", id)
@@ -128,11 +128,11 @@ export async function fetchSubmission(id: number, formId: number) {
     console.log('fetching submission', id, formId)
 
     const { data, error } = await supabase
-      .from("participants")
+      .from("submissions")
       .select(
         `
         *,
-        participants_meta(*)
+        submissions_meta(*)
       `
       )
       .eq("id", id)
@@ -143,7 +143,7 @@ export async function fetchSubmission(id: number, formId: number) {
       // throw new Error(error.message);
       return {};
     } else {
-      const entitiesValues = data.participants_meta.reduce((acc: any, entity: any) => {
+      const entitiesValues = data.submissions_meta.reduce((acc: any, entity: any) => {
         acc[entity.field_id] = entity.value;
         return acc;
       }, {});

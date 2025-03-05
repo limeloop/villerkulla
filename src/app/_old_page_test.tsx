@@ -1,4 +1,4 @@
-import {ParticipantForm} from "@/components/testForm";
+import {SubmissionForm} from "@/components/testForm";
 import Link from "next/link";
 
 export default function Page() {
@@ -17,7 +17,7 @@ export default function Page() {
           <li><Link href="/test-sida-1">Test sida 1</Link></li>
         </ul>
 
-        <ParticipantForm projectId={projectId!} />
+        <SubmissionForm projectId={projectId!} />
       
       </main>
       <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">

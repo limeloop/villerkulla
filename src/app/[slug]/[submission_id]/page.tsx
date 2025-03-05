@@ -24,7 +24,7 @@ export default async function Page({ params }: { params: { slug: string, submiss
     .single();
     
     // const { data: submission , error: submissionError } = await supabase
-    // .from("participants")
+    // .from("submissions")
     // .select("*") // or whatever columns you need
     // .eq('id', submission_id)
     // .single();
