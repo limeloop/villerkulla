@@ -2,8 +2,16 @@
 
 import { supabase } from "@/supabaseClient";
 import { useEffect, useState } from "react";
-import { FormInterpreter } from "./formInterpreter";
+import { FormInterpreter } from "./formBuilder/formInterpreter";
 import { fetchSubmission } from "@/actions/formBuilder";
+
+/*
+
+ 1. Create submit here and pass down
+ 2. Create fetch submission here and pass down
+
+*/
+
 
 export const Form = ({ id, submissionId }: { id: number, submissionId?: any }) => {
   // fetch data json from supabase for website_forms with id;
@@ -37,31 +45,23 @@ export const Form = ({ id, submissionId }: { id: number, submissionId?: any }) =
 
   useEffect(() => {
     // if(initialData) return;
-
     const fetchData = async () => {
+      if(!submissionId) return;
       const fetchedData = await fetchSubmission(submissionId, id);
       console.log("Fetched data", fetchedData);
       if (fetchedData) {
         setInitialData(fetchedData);
       }
-
     };
     fetchData();
-  }, []);
+  }, [submissionId]);
+
+  // console.log("Form", form);
 
   return (
     <div>
-      <h1>Form {id}</h1>
-      <br />
-
-      <p>Form body:</p>
       {(form && form.data && !submissionId) && (<FormInterpreter form={form} schema={form.data.schema} />)}
       {(form && form.data && submissionId && initialData) && (<FormInterpreter form={form} schema={form.data.schema} initialData={initialData} />)}
-      <br />
-
-      {/* {JSON.stringify(form.data, null, 2)} */}
-      <br />
-      {/* <button onClick={handleSubmit}>Submit</button> */}
     </div>
   );
 };

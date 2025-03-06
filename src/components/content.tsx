@@ -1,8 +1,7 @@
 // app/[slug]/page.tsx
 'use client'
-import parse, { DOMNode } from 'html-react-parser';
+import parse, { DOMNode, Element } from 'html-react-parser';
 import { Form } from './form';
-
 
 export default function Content({
   html,
@@ -13,20 +12,21 @@ export default function Content({
   css: any;
   submissionId?: any;
 }) {
+
   const options = {
     replace: (domNode: DOMNode) => {
-      // If we see a comment node with the placeholder, return <MyForm/>
-      const data = (domNode as any)?.data?.trim(); // Using 'as any' or @ts-ignore if needed
-      if (data && data.startsWith("[application_form id=")) {
-        // Use a regex to match id="some_value"
-        const match = data.match(/id="([^"]+)"/);
+      // We only care about <form> tags
+      if (domNode instanceof Element && domNode.tagName === 'form') {
+        // console.log(domNode);
+        //Check if there is a data-form-id="something" attribute
+        const formId = domNode.attribs?.['data-form-id'];
 
-        if (match && match[1]) {
-          const formId = match[1]; // e.g. "3"
-          return <Form id={formId} submissionId={submissionId} />;
+        if (formId) {
+          // Return your React <Form> component instead of the original <form> node
+          return <Form id={Number(formId)} submissionId={submissionId} />;
         }
       }
-      // Return undefined for everything else, so it's left as-is
+      // Otherwise, return undefined to leave other nodes as-is
       return undefined;
     },
   };
