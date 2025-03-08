@@ -17,7 +17,6 @@ export default function Content({
     replace: (domNode: DOMNode) => {
       // We only care about <form> tags
       if (domNode instanceof Element && domNode.tagName === 'form') {
-        // console.log(domNode);
         //Check if there is a data-form-id="something" attribute
         const formId = domNode.attribs?.['data-form-id'];
 

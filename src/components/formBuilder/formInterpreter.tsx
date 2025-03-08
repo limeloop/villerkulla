@@ -9,7 +9,7 @@ import { TextFieldEntity } from "./textFieldEntity";
 import { FormEvent, useState } from "react";
 import { EmailFieldEntity } from "./emailFieldEntity";
 import { formBuilder } from "@/app/types/formBuilder";
-import { saveSubmission } from "@/actions/formBuilder";
+import { saveSubmission, cancelSubmission } from "@/actions/formBuilder";
 import { PhoneFieldEntity } from "./phoneFieldEntity";
 import { CheckboxFieldEntity } from "./checkboxFieldEntity";
 import { SelectFieldEntity } from "./selectFieldEntity";
@@ -18,10 +18,11 @@ type FormBuilderSchema = Schema<typeof formBuilder>;
 
 export function FormInterpreter(props: {
   form: any;
+  submissionId?: number;
   schema: FormBuilderSchema;
   initialData?: any;
 }) {
-  const { form, initialData, schema } = props;
+  const { form, initialData, schema, submissionId } = props;
 
   const [success, setSuccess] = useState<any>(null);
 
@@ -39,7 +40,17 @@ export function FormInterpreter(props: {
     },
   });
 
-  async function submitForm(e: FormEvent<HTMLFormElement>) {
+  async function cancel() {
+    if(submissionId) {
+      const submit = await cancelSubmission(submissionId);
+      setSuccess(submit);
+    } else {
+      console.error("Cancel failed");
+      setSuccess(false)
+    }
+  }
+
+  async function submitForm() {
     /*
     | We validate the values once again on the client
     | to trigger all the validations and provide the user
@@ -53,7 +64,7 @@ export function FormInterpreter(props: {
       | Alternatively you can use `validationResult.data`
       | instead of sending `FormData`.
       */
-      const submit = await saveSubmission(validationResult.data, form, schema);
+      const submit = await saveSubmission(validationResult.data, form, schema, submissionId);
       setSuccess(submit);
     } else {
       console.error("Validation failed");
@@ -71,13 +82,7 @@ export function FormInterpreter(props: {
   }
 
   return (
-    <form
-      onSubmit={(e) => {
-        e.preventDefault();
-
-        void submitForm(e);
-      }}
-    >
+    <form action="#" onSubmit={() => null}>
        <InterpreterEntities
           interpreterStore={interpreterStore}
           components={{
@@ -88,7 +93,9 @@ export function FormInterpreter(props: {
             selectField: SelectFieldEntity,
           }}
         />
-      <button type="submit">Submit</button>
+      
+      <button type="button" onClick={() => submitForm()}>Submit</button>
+      <button type="button" onClick={() => cancel()}>Cancel</button>
     </form>
   );
 }

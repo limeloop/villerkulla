@@ -1,67 +1,85 @@
 "use client";
 
-import { supabase } from "@/supabaseClient";
 import { useEffect, useState } from "react";
 import { FormInterpreter } from "./formBuilder/formInterpreter";
-import { fetchSubmission } from "@/actions/formBuilder";
 
-/*
+const maybeConvertValue = (value: string) => {
+  switch (value) {
+    case "true":
+      return true;
+    case "false":
+      return false;
+    default:
+      return value;
+  }
+}
 
- 1. Create submit here and pass down
- 2. Create fetch submission here and pass down
 
-*/
+export const Form = ({
+  id,
+  submissionId,
+}: {
+  id: number;
+  submissionId?: any;
+}) => {
 
-
-export const Form = ({ id, submissionId }: { id: number, submissionId?: any }) => {
-  // fetch data json from supabase for website_forms with id;
   const [form, setForm] = useState<any>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<boolean>(true);
   const [initialData, setInitialData] = useState<any>();
-// 
-  useEffect(() => {
-    const fetchData = async () => {
-      setLoading(true);
-      console.log(
-        "selecting form with id:",
-        id,
-        "website id",
-        process.env.NEXT_PUBLIC_WEBSITE_ID
-      );
-      const { data, error } = await supabase
-        .from("website_forms")
-        .select("*") // or whatever columns you need
-        .eq("id", id)
-        .single();
-      // console.log(data);
-      setForm(data);
-      setLoading(false);
-    };
-    fetchData();
-  }, []);
-
 
   useEffect(() => {
-    // if(initialData) return;
-    const fetchData = async () => {
-      if(!submissionId) return;
-      const fetchedData = await fetchSubmission(submissionId, id);
-      console.log("Fetched data", fetchedData);
-      if (fetchedData) {
-        setInitialData(fetchedData);
-      }
+    const getForm = async () => {
+      const data = await fetch(`/api/forms/get`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ formId: id }),
+      });
+      const result = await data.json();
+      setForm(result.data);
     };
-    fetchData();
-  }, [submissionId]);
+    getForm();
+  }, [id]);
 
-  // console.log("Form", form);
+  useEffect(() => {
+    if (!id || !submissionId) {
+      return;
+    }
+
+    const getSubmission = async () => {
+      const data = await fetch(`/api/submission/get`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ submissionId: submissionId, formId: id }),
+      });
+      const result = await data.json();
+      const entitiesValues = result.data.meta.reduce((acc: any, entity: any) => {
+        acc[entity.fieldId] = maybeConvertValue(entity.value);
+        return acc;
+      }, {});
+      setInitialData({entitiesValues});
+    };
+    getSubmission();
+  }, [id, submissionId]);
 
   return (
     <div>
-      {(form && form.data && !submissionId) && (<FormInterpreter form={form} schema={form.data.schema} />)}
-      {(form && form.data && submissionId && initialData) && (<FormInterpreter form={form} schema={form.data.schema} initialData={initialData} />)}
+      {form && form.data && !submissionId && (
+        <FormInterpreter form={form} schema={form.data.schema} />
+      )}
+      {form && form.data && submissionId && initialData && (
+        <FormInterpreter
+          form={form}
+          submissionId={submissionId}
+          schema={form.data.schema}
+          initialData={initialData}
+        />
+      )}
     </div>
   );
 };

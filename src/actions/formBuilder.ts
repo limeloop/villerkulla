@@ -2,24 +2,14 @@
 
 import { validateEntitiesValues } from "@coltorapps/builder";
 import { formBuilder } from "@/app/types/formBuilder";
-import { supabase } from "@/supabaseClient";
-
-export async function getFormSchema(id: number) {
-  const { data: schema } = await supabase
-    .from("schemas")
-    .select("data")
-    .eq("id", id)
-    .single();
-  return schema;
-}
 
 export async function saveSubmission(
   values: Record<string, any>,
   form: any,
-  schema: any
+  schema: any,
+  submissionId?: number
 ): Promise<boolean> {
   // Retrieve the form schema from your storage of choice.
-  // const form = await getFormSchema(1);
 
   /*
   | We validate the incoming form values based
@@ -32,7 +22,6 @@ export async function saveSubmission(
   );
 
   if (validationResult.success) {
-    // console.log("Validation result data", validationResult.data);
     /*
     | The `validationResult.data` contains valid values
     | that can be stored in the database.
@@ -44,18 +33,22 @@ export async function saveSubmission(
     try {
       const data = {
         formId: form.id,
+        submissionId: submissionId,
         ...validationResult.data,
       };
-      console.log("data", data);
-      await fetch(process.env.SITE_URL+"/api/submission/create", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      });
+      await fetch(
+        `${process.env.SITE_URL}/api/submission/${
+          submissionId ? "update" : "create"
+        }`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        }
+      );
       return true;
-
     } catch (err) {
       console.log(err);
       return false;
@@ -67,48 +60,41 @@ export async function saveSubmission(
   } else {
     console.error("Validation failed");
     console.error(validationResult.entitiesErrors);
-    console.log({
-        formId: form.id,
-      })
     /*
     | The `validationResult.entitiesErrors` object contains
     | validation errors corresponding to invalid
     | entities values.
     */
-   return false;
+    return false;
   }
-  return false;
 }
 
-export async function fetchSubmission(id: number, formId: number) {
+export async function cancelSubmission(
+  submissionId?: number
+): Promise<boolean> {
+  // Retrieve the form schema from your storage of choice.
 
   try {
-
-    console.log('fetching submission', id, formId)
-
-    const { data, error } = await supabase
-      .from("submissions")
-      .select(
-        `
-        *,
-        submissions_meta(*)
-      `
-      )
-      .eq("id", id)
-      .eq("form_id", formId)
-      .single();
-    if (error) {
-      console.log("fetch submission error", error);
-      // throw new Error(error.message);
-      return {};
-    } else {
-      const entitiesValues = data.submissions_meta.reduce((acc: any, entity: any) => {
-        acc[entity.field_id] = entity.value;
-        return acc;
-      }, {});
-      return { entitiesValues };
-    }
-  } catch (error) {
-    console.log("error", error);
+    const data = {
+      submissionId: submissionId,
+    };
+    await fetch(
+      `${process.env.SITE_URL}/api/submission/cancel`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      }
+    );
+    return true;
+  } catch (err) {
+    console.log(err);
+    return false;
+    // setError(err.message);
+  } finally {
+    // setLoading(false);
+    return true;
   }
 }
