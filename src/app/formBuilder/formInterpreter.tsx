@@ -5,15 +5,22 @@ import {
   InterpreterEntities,
   useInterpreterStore,
 } from "@coltorapps/builder-react";
-import { TextFieldEntity } from "./textFieldEntity";
 import { FormEvent, useState } from "react";
-import { EmailFieldEntity } from "./emailFieldEntity";
-import { formBuilder } from "@/app/types/formBuilder";
+import { formBuilder } from "./types/formBuilder";
 import { saveSubmission, cancelSubmission } from "@/actions/formBuilder";
-import { PhoneFieldEntity } from "./phoneFieldEntity";
-import { CheckboxFieldEntity } from "./checkboxFieldEntity";
-import { SelectFieldEntity } from "./selectFieldEntity";
 
+import {
+    CheckboxFieldEntity,
+    EmailFieldEntity,
+    Heading1FieldEntity,
+    ParagraphFieldEntity,
+    PhoneFieldEntity,
+    RadioButtonFieldEntity,
+    SelectFieldEntity,
+    TextAreaFieldEntity,
+    TextFieldEntity,
+  } from "./index";
+  
 type FormBuilderSchema = Schema<typeof formBuilder>;
 
 export function FormInterpreter(props: {
@@ -91,6 +98,10 @@ export function FormInterpreter(props: {
             phoneField: PhoneFieldEntity,
             checkBoxField: CheckboxFieldEntity,
             selectField: SelectFieldEntity,
+            radioButtonField: RadioButtonFieldEntity,
+            textAreaField: TextAreaFieldEntity,
+            heading1Field: Heading1FieldEntity,
+            paragraphField: ParagraphFieldEntity,
           }}
         />
       

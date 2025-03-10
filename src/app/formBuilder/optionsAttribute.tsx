@@ -1,9 +1,9 @@
 import { ZodError } from "zod";
 
 import { createAttributeComponent } from "@coltorapps/builder-react";
-import { optionsAttribute } from "@/types/formBuilder/optionsAttribute";
-import { Label } from "../ui/label";
-import { Input } from "../ui/input";
+import { optionsAttribute } from "./types/optionsAttribute";
+import { Label } from "./ui/label";
+import { Input } from "./ui/input";
 import { useState } from "react";
 import { SquareX } from "lucide-react";
 

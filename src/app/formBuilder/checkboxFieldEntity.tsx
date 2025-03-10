@@ -1,9 +1,8 @@
 import { ZodError } from "zod";
 
 import { createEntityComponent } from "@coltorapps/builder-react";
-import { Label } from "../ui/label";
-import { Checkbox } from "../ui/checkbox";
-import { checkBoxFieldEntity } from "@/types/checkBoxField";
+import { Label } from "./ui/label";
+import { checkBoxFieldEntity } from "./types/checkBoxField";
 
 export const CheckboxFieldEntity = createEntityComponent(
   checkBoxFieldEntity,
@@ -16,7 +15,7 @@ export const CheckboxFieldEntity = createEntityComponent(
           id={props.entity.id}
           name={props.entity.id}
           checked={props.entity.value ?? false}
-          onChange={(e) => props.setValue(!props.entity.value)}
+          onChange={() => props.setValue(!props.entity.value)}
         />
         <Label htmlFor={props.entity.id}>{props.entity.attributes.label}</Label>
         {props.entity.error instanceof ZodError

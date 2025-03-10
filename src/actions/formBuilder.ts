@@ -1,7 +1,7 @@
 "use server";
 
 import { validateEntitiesValues } from "@coltorapps/builder";
-import { formBuilder } from "@/app/types/formBuilder";
+import { formBuilder } from "@/app/formBuilder/types/formBuilder";
 
 export async function saveSubmission(
   values: Record<string, any>,

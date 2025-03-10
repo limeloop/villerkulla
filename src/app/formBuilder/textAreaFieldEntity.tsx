@@ -1,15 +1,15 @@
 import { ZodError } from "zod";
 
 import { createEntityComponent } from "@coltorapps/builder-react";
-import { textFieldEntity } from "@/types/formBuilder/textField";
-import { Label } from "../ui/label";
-import { Input } from "../ui/input";
+import { Label } from "./ui/label";
+import { Textarea } from "./ui/textarea";
+import { textAreaFieldEntity } from "./types";
 
-export const TextFieldEntity = createEntityComponent(textFieldEntity, (props) => {
+export const TextAreaFieldEntity = createEntityComponent(textAreaFieldEntity, (props) => {
   return (
     <div className="">
       <Label htmlFor={props.entity.id}>{props.entity.attributes.label}</Label>
-      <Input
+      <Textarea
         id={props.entity.id}
         name={props.entity.id}
         value={props.entity.value ?? ""}

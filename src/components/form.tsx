@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { FormInterpreter } from "./formBuilder/formInterpreter";
+import { FormInterpreter } from "@/app/formBuilder/formInterpreter";
 
 const maybeConvertValue = (value: string) => {
   switch (value) {

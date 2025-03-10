@@ -1,9 +1,9 @@
 import { ZodError } from "zod";
 
 import { createAttributeComponent } from "@coltorapps/builder-react";
-import { labelAttribute } from "@/types/formBuilder/labelAttribute";
-import { Label } from "../ui/label";
-import { Input } from "../ui/input";
+import { labelAttribute } from "./types/labelAttribute";
+import { Label } from "./ui/label";
+import { Input } from "./ui/input";
 
 export const LabelAttribute = createAttributeComponent(labelAttribute, (props) => {
   const id = `${props.entity.id}-${props.attribute.name}`;

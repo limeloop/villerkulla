@@ -1,9 +1,9 @@
 import { ZodError } from "zod";
 
 import { createEntityComponent } from "@coltorapps/builder-react";
-import { Label } from "../ui/label";
-import { selectFieldEntity } from "@/types/formBuilder/selectField";
-import { Select } from "../ui/select";
+import { Label } from "./ui/label";
+import { selectFieldEntity } from "./types/selectField";
+import { Select } from "./ui/select";
 
 export const SelectFieldEntity = createEntityComponent(selectFieldEntity, (props) => {
   return (

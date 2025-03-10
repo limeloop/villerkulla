@@ -1,9 +1,9 @@
 import { ZodError } from "zod";
 
 import { createAttributeComponent } from "@coltorapps/builder-react";
-import { requiredAttribute } from "@/types/formBuilder/requiredAttribute";
-import { Label } from "../ui/label";
-import { Input } from "../ui/input";
+import { requiredAttribute } from "./types/requiredAttribute";
+import { Label } from "./ui/label";
+import { Input } from "./ui/input";
 
 export const RequiredAttribute = createAttributeComponent(
   requiredAttribute,

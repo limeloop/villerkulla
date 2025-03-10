@@ -1,9 +1,9 @@
 import { ZodError } from "zod";
 
 import { createEntityComponent } from "@coltorapps/builder-react";
-import { emailFieldEntity } from "@/types/formBuilder/emailField";
-import { Label } from "../ui/label";
-import { Input } from "../ui/input";
+import { emailFieldEntity } from "./types/emailField";
+import { Label } from "./ui/label";
+import { Input } from "./ui/input";
 
 export const EmailFieldEntity = createEntityComponent(
   emailFieldEntity,
