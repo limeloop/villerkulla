@@ -1,13 +1,14 @@
 Todos:
 
  - Clean up code, increase readability of the codebase.
- - Fix: Cancel submissions once.
+ - Fix: Cancel submissions once. If cancelled, display that is cancelled already.
  - Fix: Allow <head> and add
- - Add basic UI-css for formfields from tailwind to use.
- - Add basic UI-wrapper for 
- - Improve error handling and feedback from submisisions and cancellations
- - Improve 404
- - Try optimize loading and cache.
- - Clean up deps
- - Fix: Read websites_pages status before display page.
- 
+ - Add basic UI-css for formfields from tailwind to use. Add to safeList.
+ - Add basic UI-wrapper for form edit and cancel pages.
+ - Improve error handling and feedback from submisisions and cancellations.
+ - Improve 404. 
+ - Clean up dependcies from package.json that is not used.
+ - Fix: Read websites_pages status before display page. If not published, redirect 404.
+  - Try optimize loading and cache.
+
+  
