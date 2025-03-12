@@ -5,22 +5,22 @@ import {
   InterpreterEntities,
   useInterpreterStore,
 } from "@coltorapps/builder-react";
-import { FormEvent, useState } from "react";
+import { useState } from "react";
 import { formBuilder } from "./types/formBuilder";
 import { saveSubmission, cancelSubmission } from "@/actions/formBuilder";
 
 import {
-    CheckboxFieldEntity,
-    EmailFieldEntity,
-    Heading1FieldEntity,
-    ParagraphFieldEntity,
-    PhoneFieldEntity,
-    RadioButtonFieldEntity,
-    SelectFieldEntity,
-    TextAreaFieldEntity,
-    TextFieldEntity,
-  } from "./index";
-  
+  CheckboxFieldEntity,
+  EmailFieldEntity,
+  Heading1FieldEntity,
+  ParagraphFieldEntity,
+  PhoneFieldEntity,
+  RadioButtonFieldEntity,
+  SelectFieldEntity,
+  TextAreaFieldEntity,
+  TextFieldEntity,
+} from "./index";
+
 type FormBuilderSchema = Schema<typeof formBuilder>;
 
 export function FormInterpreter(props: {
@@ -48,12 +48,12 @@ export function FormInterpreter(props: {
   });
 
   async function cancel() {
-    if(submissionId) {
+    if (submissionId) {
       const submit = await cancelSubmission(submissionId);
       setSuccess(submit);
     } else {
       console.error("Cancel failed");
-      setSuccess(false)
+      setSuccess(false);
     }
   }
 
@@ -71,11 +71,16 @@ export function FormInterpreter(props: {
       | Alternatively you can use `validationResult.data`
       | instead of sending `FormData`.
       */
-      const submit = await saveSubmission(validationResult.data, form, schema, submissionId);
+      const submit = await saveSubmission(
+        validationResult.data,
+        form,
+        schema,
+        submissionId
+      );
       setSuccess(submit);
     } else {
       console.error("Validation failed");
-      setSuccess(false)
+      setSuccess(false);
       /*
       | If the validation fails, you can handle the error
       | and provide feedback to the user.
@@ -84,29 +89,45 @@ export function FormInterpreter(props: {
     }
   }
 
-  if(success) {
-    return <div>Success</div>
+  if (success) {
+    return <div>Success</div>;
   }
 
   return (
     <form action="#" onSubmit={() => null}>
-       <InterpreterEntities
-          interpreterStore={interpreterStore}
-          components={{
-            textField: TextFieldEntity,
-            emailField: EmailFieldEntity,
-            phoneField: PhoneFieldEntity,
-            checkBoxField: CheckboxFieldEntity,
-            selectField: SelectFieldEntity,
-            radioButtonField: RadioButtonFieldEntity,
-            textAreaField: TextAreaFieldEntity,
-            heading1Field: Heading1FieldEntity,
-            paragraphField: ParagraphFieldEntity,
-          }}
-        />
-      
-      <button type="button" onClick={() => submitForm()}>Submit</button>
-      <button type="button" onClick={() => cancel()}>Cancel</button>
+      <InterpreterEntities
+        interpreterStore={interpreterStore}
+        components={{
+          textField: TextFieldEntity,
+          emailField: EmailFieldEntity,
+          phoneField: PhoneFieldEntity,
+          checkBoxField: CheckboxFieldEntity,
+          selectField: SelectFieldEntity,
+          radioButtonField: RadioButtonFieldEntity,
+          textAreaField: TextAreaFieldEntity,
+          heading1Field: Heading1FieldEntity,
+          paragraphField: ParagraphFieldEntity,
+        }}
+      />
+      <div className="flex justify-between space-x-4 mt-4">
+        <button
+          key='submit'
+          type="button"
+          onClick={() => submitForm()}
+          className="bg-black hover:bg-gray-800 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+        >
+          Submit
+        </button>
+        {(submissionId && initialData) && (
+        <button
+          key='cancel'
+          className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+          type="button"
+          onClick={() => cancel()}
+        >
+          Cancel
+        </button>)}
+      </div>
     </form>
   );
 }
