@@ -21,7 +21,8 @@ export async function POST(req: NextRequest) {
       websiteId: process.env.WEBSITE_ID,
       projectId: process.env.PROJECT_ID,
       formId: formId,
-      fields: body
+      fields: body,
+      websiteUrl: process.env.WEBSITE_URL
     };
     
     console.log(requestData);

@@ -15,7 +15,9 @@ export async function POST(req: NextRequest) {
     }
     
     const requestData = {
-      submissionId: body.submissionId
+      submissionId: body.submissionId,
+      websiteUrl: process.env.WEBSITE_URL,
+      publicKey: body.publicKey,
     };
     
     const response = await fetch(`${baseUrl}/submission/cancel`, {

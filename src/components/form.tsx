@@ -31,15 +31,22 @@ export const Form = ({
 
   useEffect(() => {
     const getForm = async () => {
-      const data = await fetch(`/api/forms/get`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ formId: id }),
-      });
-      const result = await data.json();
-      setForm(result.data);
+      try {
+        setLoading(true);
+        const data = await fetch(`/api/forms/get`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ formId: id }),
+        });
+        const result = await data.json();
+        setForm(result.data);
+      } catch (error:any) {
+        console.error(error);
+        setError(error.message);
+      }
+      setLoading(false);
     };
     getForm();
   }, [id]);
@@ -48,22 +55,31 @@ export const Form = ({
     if (!id || !submissionId) {
       return;
     }
-
+    const params = new URLSearchParams(window.location.search);
+    const publicKey = params.get("publicKey");
+    
     const getSubmission = async () => {
+      try {
       const data = await fetch(`/api/submission/get`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ submissionId: submissionId, formId: id }),
+        body: JSON.stringify({ submissionId: submissionId, formId: id, publicKey: publicKey }),
       });
       const result = await data.json();
+      console.log("Submission data:", result);
       const entitiesValues = result.data.meta.reduce((acc: any, entity: any) => {
         acc[entity.fieldId] = maybeConvertValue(entity.value);
         return acc;
       }, {});
       setInitialData({entitiesValues});
-    };
+  } catch (error:any) {
+    console.error(error);
+    setError(error.message);
+    setInitialData(null);
+  }
+  }
     getSubmission();
   }, [id, submissionId]);
 

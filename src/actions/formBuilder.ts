@@ -7,7 +7,8 @@ export async function saveSubmission(
   values: Record<string, any>,
   form: any,
   schema: any,
-  submissionId?: number
+  submissionId?: number,
+  publicKey?: string|null,
 ): Promise<boolean> {
   // Retrieve the form schema from your storage of choice.
 
@@ -34,10 +35,11 @@ export async function saveSubmission(
       const data = {
         formId: form.id,
         submissionId: submissionId,
+        publicKey: publicKey,
         ...validationResult.data,
       };
       await fetch(
-        `${process.env.SITE_URL}/api/submission/${
+        `${process.env.WEBSITE_URL}/api/submission/${
           submissionId ? "update" : "create"
         }`,
         {
@@ -70,16 +72,18 @@ export async function saveSubmission(
 }
 
 export async function cancelSubmission(
-  submissionId?: number
+  submissionId?: number,
+  publicKey?: string|null,
 ): Promise<boolean> {
   // Retrieve the form schema from your storage of choice.
 
   try {
     const data = {
+      publicKey: publicKey,
       submissionId: submissionId,
     };
     await fetch(
-      `${process.env.SITE_URL}/api/submission/cancel`,
+      `${process.env.WEBSITE_URL}/api/submission/cancel`,
       {
         method: "POST",
         headers: {

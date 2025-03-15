@@ -20,12 +20,17 @@ export async function POST(req: NextRequest) {
     const submissionId = body.submissionId;
     delete body.submissionId;
 
+    const publicKey = body.publicKey;
+    delete body.publicKey;
+
     const requestData = {
       submissionId: submissionId,
       websiteId: process.env.WEBSITE_ID,
       projectId: process.env.PROJECT_ID,
       formId: formId,
-      fields: body
+      fields: body,
+      publicKey: publicKey,
+      websiteUrl: process.env.WEBSITE_URL
     };
     
     const response = await fetch(`${baseUrl}/submission/update`, {

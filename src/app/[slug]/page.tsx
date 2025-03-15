@@ -1,30 +1,38 @@
+import { unstable_cache } from 'next/cache';
 import Content from "@/components/content";
-import { notFound } from 'next/navigation'
+import { notFound } from 'next/navigation';
 import { getPageData } from "@/actions/pages";
+import VisitorTracker from '@/components/visitor';
 
-
-// Mark the revalidation interval if you want ISR-like behavior in the App Router
-// (optional; if omitted, the page is SSR on every request)
-
-export const revalidate = 60; 
-
+// This page component uses unstable_cache to cache getPageData for a given slug.
 export default async function Page({ params }: { params: { slug: string } }) {
-    const { slug } = await params;
-  // `params.slug` corresponds to the dynamic segment in the URL, e.g. /about -> "about"
-    
-    const { html, css, error } = await getPageData(process.env.NEXT_PUBLIC_WEBSITE_ID!, slug);
- 
-  if(!html) notFound()
+  const { slug } = params;
+
+  // Wrap the getPageData call in unstable_cache.
+  // Including `slug` in the key ensures each slug gets its own cache entry.
+  const getCachedPageData = unstable_cache(
+    async () => {
+      return await getPageData(process.env.NEXT_PUBLIC_WEBSITE_ID!, slug);
+    },
+    ['page-data', slug],
+    { revalidate: 60 }
+  );
+
+  const { html, css, error } = await getCachedPageData();
+
+  if (!html) notFound();
 
   if (error) {
-    // handle error: you can throw or return a "not found" UI
-    // throw new Error(error.message);
+    // You can throw an error or handle it as needed.
     return null;
   }
 
-  
-  let page = html.replace('<body','<div');
-  page = page.replace('</body>','</div>');
+  // Replace <body> tags with <div> tags.
+  let page = html.replace('<body', '<div');
+  page = page.replace('</body>', '</div>');
 
-  return (<><Content html={page} css={css} /> </>)
+  return <>
+  <Content html={page} css={css} />
+  <VisitorTracker />
+  </>;
 }

@@ -15,11 +15,12 @@ export async function POST(req: NextRequest) {
     const requestData = {
       websiteId: process.env.WEBSITE_ID,
       projectId: process.env.PROJECT_ID,
+      publicKey: body.publicKey,
       formId: body.formId,
-      submissionId: body.submissionId
+      submissionId: body.submissionId,
+      websiteUrl: process.env.WEBSITE_URL
     };
     
-
     const response = await fetch(`${baseUrl}/submission/get`, {
       method: "POST",
       headers: {

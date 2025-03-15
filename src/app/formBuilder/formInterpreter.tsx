@@ -49,7 +49,9 @@ export function FormInterpreter(props: {
 
   async function cancel() {
     if (submissionId) {
-      const submit = await cancelSubmission(submissionId);
+      const params = new URLSearchParams(window.location.search);
+      const publicKey = params.get("publicKey");
+      const submit = await cancelSubmission(submissionId, publicKey);
       setSuccess(submit);
     } else {
       console.error("Cancel failed");
@@ -71,11 +73,16 @@ export function FormInterpreter(props: {
       | Alternatively you can use `validationResult.data`
       | instead of sending `FormData`.
       */
+
+      const params = new URLSearchParams(window.location.search);
+      const publicKey = params.get("publicKey");
+    
       const submit = await saveSubmission(
         validationResult.data,
         form,
         schema,
-        submissionId
+        submissionId,
+        publicKey,
       );
       setSuccess(submit);
     } else {
