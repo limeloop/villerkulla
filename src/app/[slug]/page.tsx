@@ -12,7 +12,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
   // Including `slug` in the key ensures each slug gets its own cache entry.
   const getCachedPageData = unstable_cache(
     async () => {
-      return await getPageData(process.env.NEXT_PUBLIC_WEBSITE_ID!, slug);
+      return await getPageData(process.env.WEBSITE_ID!, slug);
     },
     ['page-data', slug],
     { revalidate: 60 }

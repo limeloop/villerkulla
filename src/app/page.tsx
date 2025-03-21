@@ -8,7 +8,7 @@ export const revalidate = 60;
 
 export default async function Page() {
   
-  const data = await getPages(process.env.NEXT_PUBLIC_WEBSITE_ID!);
+  const data = await getPages(process.env.WEBSITE_ID!);
   
   if (!data) notFound();
 
