@@ -4,11 +4,17 @@ import { createEntity } from "@coltorapps/builder";
 import { labelAttribute } from "./labelAttribute";
 import { requiredAttribute } from "./requiredAttribute";
 import { optionsAttribute } from "./optionsAttribute";
+import { instructionsAttribute } from "./instructionsAttribute";
 
 
 export const radioButtonFieldEntity = createEntity({
   name: "radioButtonField",
-  attributes: [labelAttribute, requiredAttribute, optionsAttribute],
+  attributes: [
+    labelAttribute,
+    requiredAttribute,
+    optionsAttribute,
+    instructionsAttribute,
+  ],
   validate(value, context) {
     const schema = z.string();
 

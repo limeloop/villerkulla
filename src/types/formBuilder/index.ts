@@ -5,6 +5,7 @@ export { heading1FieldEntity } from "./heading1Field";
 export { phoneFieldEntity } from "./phoneField";
 export { radioButtonFieldEntity } from "./radioButtonField";
 export { selectFieldEntity } from "./selectField";
+export { multiSelectFieldEntity } from "./multiSelectField";
 export { textAreaFieldEntity } from "./textAreaField";
 export { textFieldEntity } from "./textField";
 export { paragraphFieldEntity } from "./paragraphField";

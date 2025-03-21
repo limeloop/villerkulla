@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { FormInterpreter } from "@/app/formBuilder/formInterpreter";
+import { FormBuilderSchema, FormInterpreter } from "@/app/formBuilder/formInterpreter";
 
 const maybeConvertValue = (value: string) => {
   switch (value) {
@@ -20,14 +20,13 @@ export const Form = ({
   submissionId,
 }: {
   id: number;
-  submissionId?: any;
+  submissionId?: number;
 }) => {
 
-  const [form, setForm] = useState<any>(null);
+  const [form, setForm] = useState<{id: number, data: {schema: FormBuilderSchema, entities: { [key: string]: string }}}|null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-  const [success, setSuccess] = useState<boolean>(true);
-  const [initialData, setInitialData] = useState<any>();
+  const [initialData, setInitialData] = useState<{ [key: string]: string }|null>();
 
   useEffect(() => {
     const getForm = async () => {
@@ -42,9 +41,14 @@ export const Form = ({
         });
         const result = await data.json();
         setForm(result.data);
-      } catch (error:any) {
+      } catch (error: unknown) {
+        setForm(null);
+        if(error instanceof Error) {
+          setError(error.message);
+        } else {
         console.error(error);
-        setError(error.message);
+          setError("Internal Server Error");
+        }
       }
       setLoading(false);
     };
@@ -69,19 +73,36 @@ export const Form = ({
       });
       const result = await data.json();
       console.log("Submission data:", result);
-      const entitiesValues = result.data.meta.reduce((acc: any, entity: any) => {
-        acc[entity.fieldId] = maybeConvertValue(entity.value);
-        return acc;
-      }, {});
+      const entitiesValues = result.data.meta.reduce(
+        (acc: { [key: string]: string }, entity: { fieldId: string; value: number }) => {
+          // Convert the number to a string before passing it in.
+          const converted = maybeConvertValue(entity.value.toString());
+          // If the result is a boolean, convert it to a string.
+          acc[entity.fieldId] = typeof converted === "boolean" ? String(converted) : converted;
+          return acc;
+        },
+        {}
+      );
       setInitialData({entitiesValues});
-  } catch (error:any) {
-    console.error(error);
-    setError(error.message);
+  } catch (error: unknown) {
     setInitialData(null);
+    if(error instanceof Error) {
+      setError(error.message);
+    } else {
+    console.error(error);
+      setError("Internal Server Error");
+    }
   }
   }
     getSubmission();
   }, [id, submissionId]);
+
+  if(loading) {
+    return <div>Loading...</div>;
+  }
+  if(error) {
+    return <div>Error</div>;
+  }
 
   return (
     <div>

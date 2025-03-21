@@ -1,26 +1,29 @@
 import { ZodError } from "zod";
 
 import { createAttributeComponent } from "@coltorapps/builder-react";
-import { Label } from "./ui/label";
-import { Input } from "./ui/input";
-import { contentAttribute } from "./types";
+import { contentAttribute } from "@/types/formBuilder";
 
-export const ContentAttribute = createAttributeComponent(contentAttribute, (props) => {
-  const id = `${props.entity.id}-${props.attribute.name}`;
+export const ContentAttribute = createAttributeComponent(
+  contentAttribute,
+  (props) => {
+    const id = `${props.entity.id}-${props.attribute.name}`;
 
-  return (
-    <div>
-      <Label htmlFor={id}>Content</Label>
-      <Input
-        id={id}
-        name={id}
-        value={props.attribute.value ?? ""}
-        onChange={(e) => props.setValue(e.target.value)}
-        required
-      />
-      {props.attribute.error instanceof ZodError
-        ? props.attribute.error.format()._errors[0]
-        : null}
-    </div>
-  );
-});
+    return (
+      <div className="rendevu-field-attribute">
+        <label className="rendevu-label" htmlFor={props.entity.id}>
+          Content
+        </label>
+        <input
+          id={id}
+          name={id}
+          value={props.attribute.value ?? ""}
+          onChange={(e) => props.setValue(e.target.value)}
+          required
+        />
+        {props.attribute.error instanceof ZodError
+          ? props.attribute.error.format()._errors[0]
+          : null}
+      </div>
+    );
+  }
+);

@@ -1,19 +1,20 @@
 import { ZodError } from "zod";
 
 import { createAttributeComponent } from "@coltorapps/builder-react";
-import { labelAttribute } from "@/types/formBuilder/labelAttribute";
+import { placeholderAttribute } from "@/types/formBuilder/placeholderAttribute";
 
-export const LabelAttribute = createAttributeComponent(
-  labelAttribute,
+export const PlaceholderAttribute = createAttributeComponent(
+  placeholderAttribute,
   (props) => {
     const id = `${props.entity.id}-${props.attribute.name}`;
 
     return (
-      <div className="rendevu-field-attribute">
+      <div className="rendevu-field-entity">
         <label className="rendevu-label" htmlFor={props.entity.id}>
-          Field label
+          Placeholder
         </label>
         <input
+          className="rendevu-input"
           id={id}
           name={id}
           value={props.attribute.value ?? ""}

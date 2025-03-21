@@ -6,6 +6,9 @@ export const revalidate = 60;
 
 export default async function Page({ params }: { params: { form_id: number } }) {
   const { form_id } = await params;
+
+  if(!form_id) notFound();
+
   return (
      <div className="bg-gray-100">
       <div className="flex items-center justify-center min-h-screen">

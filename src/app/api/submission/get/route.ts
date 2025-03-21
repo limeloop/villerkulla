@@ -36,11 +36,15 @@ export async function POST(req: NextRequest) {
     const data = await response.json();
 
     return NextResponse.json({ok: true, data});
-  } catch (error: any) {
-    console.error("Error calling get submission endpoint:", error);
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      console.error("Error calling get submission endpoint:", error);
+      return null; // Added explicit return here
+    } else {
     return NextResponse.json(
-      { error: error.message || "Internal Server Error" },
+      { error: "Internal Server Error" },
       { status: 500 }
     );
   }
+ }
 }

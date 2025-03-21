@@ -11,4 +11,6 @@ export { SelectFieldEntity } from "./selectFieldEntity";
 export { TextAreaFieldEntity } from "./textAreaFieldEntity";
 export { TextFieldEntity } from "./textFieldEntity";
 export { ParagraphFieldEntity } from "./paragraphFieldEntity";
+export { PlaceholderAttribute } from "./placeholderAttribute";
+export { InstructionsAttribute } from "./instructionsAttribute";
 

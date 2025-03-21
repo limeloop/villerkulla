@@ -1,9 +1,7 @@
 import { ZodError } from "zod";
 
 import { createAttributeComponent } from "@coltorapps/builder-react";
-import { requiredAttribute } from "./types/requiredAttribute";
-import { Label } from "./ui/label";
-import { Input } from "./ui/input";
+import { requiredAttribute } from "@/types/formBuilder/requiredAttribute";
 
 export const RequiredAttribute = createAttributeComponent(
   requiredAttribute,
@@ -11,18 +9,18 @@ export const RequiredAttribute = createAttributeComponent(
     const id = `${props.entity.id}-${props.attribute.name}`;
 
     return (
-      <div>
-        <Label htmlFor={id} className="flex">
-          <Input
-            className="size-4 mt-2"
+      <div className="rendevu-field-attribute">
+        <label htmlFor={id} className="rendevu-required-label">
+          <input
+            className="rendevu-required-input"
             id={id}
             name={id}
             type="checkbox"
             checked={props.attribute.value ?? false}
             onChange={(e) => props.setValue(e.target.checked)}
           />
-          <span className="m-2">Required</span>
-        </Label>
+          <span className="rendevu-required-span">Required</span>
+        </label>
         {props.attribute.error instanceof ZodError
           ? props.attribute.error.format()._errors[0]
           : null}

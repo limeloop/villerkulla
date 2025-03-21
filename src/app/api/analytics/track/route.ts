@@ -35,11 +35,15 @@ export async function POST(req: NextRequest) {
 
     // Return a successful response to the client
     return NextResponse.json({ ok: true, data });
-  } catch (error: any) {
-    console.error("Error calling analytics visit endpoint:", error);
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      console.error("Error calling analytics create visit endpoint:", error);
+      return null; // Added explicit return here
+    } else {
     return NextResponse.json(
-      { error: error.message || "Internal Server Error" },
+      { error: "Internal Server Error" },
       { status: 500 }
     );
+  }
   }
 }

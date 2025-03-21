@@ -1,10 +1,13 @@
+import { Page } from "@/types";
+
 export async function getPageData(
-    websiteKey: string,
+  websiteId: string,
     slug: string
-  ): Promise<any> {
+  ): Promise<Page> {
+
     // Replace with your actual endpoint URL from Site A
     const baseUrl = process.env.WEBSITE_DATA_ENDPOINT;
-
+    console.log(baseUrl, websiteId, slug);
     try {
       const response = await fetch(`${baseUrl!}/websites/page`, {
         method: "POST",
@@ -12,7 +15,7 @@ export async function getPageData(
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-            website_id: websiteKey,
+            website_id: websiteId,
             slug: slug,
         }),
       });
@@ -23,21 +26,21 @@ export async function getPageData(
   
       const data = await response.json();
       
-      const {html, css} = data;
+      // const { html, css } = data;
 
-      return {html, css};
+      return data;
     } catch (error) {
       console.error("Error calling Site A endpoint:", error);
       throw error;
-      return {error: error};
     }
   }
   
 export async function getPages(
-    websiteKey: string,
-  ): Promise<any> {
+  websiteId: string,
+  ): Promise<Page[]> {
     // Replace with your actual endpoint URL from Site A
     const baseUrl = process.env.WEBSITE_DATA_ENDPOINT;
+    console.log(baseUrl, websiteId);
 
     try {
         const response = await fetch(`${baseUrl!}/websites/pages`, {
@@ -46,21 +49,20 @@ export async function getPages(
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-            website_id: websiteKey
+            website_id: websiteId
         }),
       });
       
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
-  
+      
       const data = await response.json();
       
       return data;
     } catch (error) {
       console.error("Error calling Site A endpoint:", error);
       throw error;
-      return {error: error};
     }
   }
   

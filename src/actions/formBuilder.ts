@@ -1,12 +1,13 @@
 "use server";
 
 import { validateEntitiesValues } from "@coltorapps/builder";
-import { formBuilder } from "@/app/formBuilder/types/formBuilder";
+import { formBuilder } from "@/types/formBuilder/formBuilder";
+import { FormBuilderSchema } from "@/app/formBuilder/formInterpreter";
 
 export async function saveSubmission(
-  values: Record<string, any>,
-  form: any,
-  schema: any,
+  values: Record<string, string>,
+  form: {id: number},
+  schema: FormBuilderSchema,
   submissionId?: number,
   publicKey?: string|null,
 ): Promise<boolean> {

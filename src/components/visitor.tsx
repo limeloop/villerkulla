@@ -1,5 +1,5 @@
 "use client"
-import { useId, useEffect } from 'react';
+import { useEffect } from 'react';
 
 const VisitorTracker = () => {
   useEffect(() => {

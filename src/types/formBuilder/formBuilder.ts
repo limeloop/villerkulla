@@ -1,10 +1,16 @@
 import { createBuilder } from "@coltorapps/builder";
-import { textFieldEntity } from "./textField";
-import { emailFieldEntity } from "./emailField";
-import { phoneFieldEntity } from "./phoneField";
-import { checkBoxFieldEntity } from "../checkBoxField";
-import { selectFieldEntity } from "./selectField";
-
+import {
+  checkBoxFieldEntity,
+  emailFieldEntity,
+  heading1FieldEntity,
+  multiSelectFieldEntity,
+  paragraphFieldEntity,
+  phoneFieldEntity,
+  radioButtonFieldEntity,
+  selectFieldEntity,
+  textAreaFieldEntity,
+  textFieldEntity,
+} from "./index";
 
 export const formBuilder = createBuilder({
   entities: [
@@ -13,5 +19,10 @@ export const formBuilder = createBuilder({
     phoneFieldEntity,
     checkBoxFieldEntity,
     selectFieldEntity,
+    multiSelectFieldEntity,
+    radioButtonFieldEntity,
+    textAreaFieldEntity,
+    heading1FieldEntity,
+    paragraphFieldEntity,
   ],
 });

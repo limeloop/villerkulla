@@ -8,9 +8,9 @@ export default function Content({
   css,
   submissionId,
 }: {
-  html: any;
-  css: any;
-  submissionId?: any;
+  html: string;
+  css: string;
+  submissionId?: number;
 }) {
 
   const options = {
