@@ -14,6 +14,7 @@ export const ContentAttribute = createAttributeComponent(
           Content
         </label>
         <input
+          className="rendevu-input"
           id={id}
           name={id}
           value={props.attribute.value ?? ""}

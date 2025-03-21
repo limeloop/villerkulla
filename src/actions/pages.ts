@@ -3,11 +3,11 @@ import { Page } from "@/types";
 export async function getPageData(
   websiteId: string,
     slug: string
-  ): Promise<Page> {
+  ): Promise<Page & {error: string}> {
 
     // Replace with your actual endpoint URL from Site A
     const baseUrl = process.env.WEBSITE_DATA_ENDPOINT;
-    console.log(baseUrl, websiteId, slug);
+    // console.log(baseUrl, websiteId, slug);
     try {
       const response = await fetch(`${baseUrl!}/websites/page`, {
         method: "POST",
@@ -40,7 +40,7 @@ export async function getPages(
   ): Promise<Page[]> {
     // Replace with your actual endpoint URL from Site A
     const baseUrl = process.env.WEBSITE_DATA_ENDPOINT;
-    console.log(baseUrl, websiteId);
+    // console.log(baseUrl, websiteId);
 
     try {
         const response = await fetch(`${baseUrl!}/websites/pages`, {

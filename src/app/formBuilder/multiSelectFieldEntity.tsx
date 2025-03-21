@@ -8,6 +8,7 @@ export const MultiSelectFieldEntity = createEntityComponent(
   multiSelectFieldEntity,
   (props) => {
     const [selected, setSelected] = useState<string[]>([]);
+    const [isOpen, setIsOpen] = useState(false);
 
     const handleOptionChange = (value: string) => {
       if (selected.includes(value)) {
@@ -27,19 +28,29 @@ export const MultiSelectFieldEntity = createEntityComponent(
         <label className="rendevu-label" htmlFor={props.entity.id}>
           {props.entity.attributes.label}
         </label>
-        <select
-          id={props.entity.id}
-          value={selected}
-          onChange={(e) => handleOptionChange(e.target.value)}
-          className="h-8"
-          // placeholder={props.entity.attributes.placeholder}
+
+        <button
+          className="multi-dropdown-trigger"
+          onClick={() => setIsOpen((prev) => !prev)}
         >
-         {props.entity.attributes.options.map((option) => (
-            <option key={option.value} value={option.value}>
-              {option.label}
-            </option>
-          ))}
-          </select>
+          {selected.length > 0
+            ? `${selected.length} selected`
+            : props.entity.attributes.placeholder}
+        </button>
+        {isOpen && (
+          <div className="multi-dropdown-content">
+            {props.entity.attributes.options.map((option) => (
+              <label key={option.value} className="multi-dropdown-item">
+                <input
+                  type="checkbox"
+                  checked={selected.includes(option.value)}
+                  onChange={() => handleOptionChange(option.value)}
+                />
+                {option.label}
+              </label>
+            ))}
+          </div>
+        )}
         {props.entity.attributes.instructions && (
           <span className="text-sm italic">
             {props.entity.attributes.instructions}

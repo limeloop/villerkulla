@@ -14,6 +14,7 @@ export const LabelAttribute = createAttributeComponent(
           Field label
         </label>
         <input
+          className="rendevu-input"
           id={id}
           name={id}
           value={props.attribute.value ?? ""}

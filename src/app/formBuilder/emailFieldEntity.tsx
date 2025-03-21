@@ -3,6 +3,7 @@ import { ZodError } from "zod";
 import { createEntityComponent } from "@coltorapps/builder-react";
 import { emailFieldEntity } from "@/types/formBuilder/emailField";
 
+
 export const EmailFieldEntity = createEntityComponent(
   emailFieldEntity,
   (props) => {
@@ -12,6 +13,7 @@ export const EmailFieldEntity = createEntityComponent(
           {props.entity.attributes.label}
         </label>
         <input
+          className="rendevu-input"
           id={props.entity.id}
           name={props.entity.id}
           value={props.entity.value ?? ""}
