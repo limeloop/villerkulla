@@ -30,7 +30,8 @@ export async function getPageData(
 
       return data;
     } catch (error) {
-      console.error("Error calling Site A endpoint:", error);
+      console.error({baseUrl, websiteId, slug});
+      console.error("getPageData, Error calling endpoint:", error);
       throw error;
     }
   }
@@ -61,7 +62,8 @@ export async function getPages(
       
       return data;
     } catch (error) {
-      console.error("Error calling Site A endpoint:", error);
+      console.error({baseUrl, websiteId});
+      console.error("getPages, Error calling get pages towards endpoint:", error);
       throw error;
     }
   }
