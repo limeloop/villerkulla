@@ -3,8 +3,7 @@ import { notFound } from 'next/navigation'
 import { Form } from "@/components/form";
 
 export const revalidate = 60; 
-
-export default async function Page({ params }: { params: { form_id: number, submission_id: number } }) {
+export default async function Page({ params }: { params: Promise<{ form_id: number, submission_id: number }>}) {
   const { form_id, submission_id } = await params;
 
   if(!form_id || !submission_id) notFound();

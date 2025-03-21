@@ -5,8 +5,8 @@ import { getPageData } from "@/actions/pages";
 import VisitorTracker from '@/components/visitor';
 
 // This page component uses unstable_cache to cache getPageData for a given slug.
-export default async function Page({ params }: { params: { slug: string } }) {
-  const { slug } = params;
+export default async function Page({ params }: { params: Promise<{ slug: string }>}) {
+  const { slug } = await params;
 
   // Wrap the getPageData call in unstable_cache.
   // Including `slug` in the key ensures each slug gets its own cache entry.

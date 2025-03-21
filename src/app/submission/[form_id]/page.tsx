@@ -4,7 +4,7 @@ import { Form } from "@/components/form";
 
 export const revalidate = 60; 
 
-export default async function Page({ params }: { params: { form_id: number } }) {
+export default async function Page({ params }: { params: Promise<{ form_id: number }>}) {
   const { form_id } = await params;
 
   if(!form_id) notFound();

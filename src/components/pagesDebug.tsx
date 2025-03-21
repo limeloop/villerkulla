@@ -14,7 +14,7 @@ export default function PagesDebug({
   return (
     <>
     <ul>
-     {pages.map((page: {id: number, slug: string}, index) => (
+     {pages.map(page => (
         <li key={page.id}><Link href={`/${page.slug}`}>{page.slug}</Link></li>
      ))}
      </ul>
