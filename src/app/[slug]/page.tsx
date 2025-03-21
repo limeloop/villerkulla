@@ -15,7 +15,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
       return await getPageData(process.env.WEBSITE_ID!, slug);
     },
     ['page-data', slug],
-    { revalidate: 60 }
+    { revalidate: 5 }
   );
 
   const { html, css, error } = await getCachedPageData();
