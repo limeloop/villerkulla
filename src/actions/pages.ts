@@ -2,7 +2,8 @@ import { Page } from "@/types";
 
 export async function getPageData(
   websiteId: string,
-    slug: string
+  slug: string,
+  type?: string
   ): Promise<Page & {error: string}> {
 
     // Replace with your actual endpoint URL from Site A
@@ -17,6 +18,7 @@ export async function getPageData(
         body: JSON.stringify({
             website_id: websiteId,
             slug: slug,
+            type: type
         }),
       });
       

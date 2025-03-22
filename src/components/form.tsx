@@ -72,7 +72,7 @@ export const Form = ({
         body: JSON.stringify({ submissionId: submissionId, formId: id, publicKey: publicKey }),
       });
       const result = await data.json();
-      console.log("Submission data:", result);
+      // console.log("Submission data:", result);
       const entitiesValues = result.data.meta.reduce(
         (acc: { [key: string]: string }, entity: { fieldId: string; value: number }) => {
           // Convert the number to a string before passing it in.

@@ -8,7 +8,7 @@ const VisitorTracker = () => {
       let visitorId = localStorage.getItem('visitorId');
       if (!visitorId) {
         visitorId = `${(new Date()).getTime().toString()} ${Math.random().toString(6)}`;
-        console.log('Generated new visitor ID:', visitorId);
+        // console.log('Generated new visitor ID:', visitorId);
         localStorage.setItem('visitorId', visitorId);
       }
       return visitorId;
@@ -35,7 +35,8 @@ const VisitorTracker = () => {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log('Visit tracked successfully:', data);
+        // console.log('Visit tracked successfully:', data);
+        return !!data
       })
       .catch((error) => {
         console.error('Error tracking visit:', error);

@@ -28,7 +28,7 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
       throw new Error("Missing WEBSITE_DATA_ENDPOINT in environment variables");
     }
 
-    console.log("Received form submission:", body);
+    // console.log("Received form submission:", body);
 
     // Validate that the formId is present.
     if (!body.formId) {
@@ -50,7 +50,7 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
       websiteUrl: process.env.WEBSITE_URL || "",
     };
 
-    console.log("Sending submission request:", requestData);
+    // console.log("Sending submission request:", requestData);
 
     // Forward the data to the external API endpoint.
     const response = await fetch(`${baseUrl}/submission/create`, {
