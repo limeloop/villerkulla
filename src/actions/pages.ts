@@ -32,7 +32,7 @@ export async function getPageData(
 
       return data;
     } catch (error) {
-      console.error({baseUrl, websiteId, slug});
+      console.error({baseUrl, websiteId, slug, type});
       console.error("getPageData, Error calling endpoint:", error);
       throw error;
     }
