@@ -1,4 +1,4 @@
-import { unstable_cache } from 'next/cache';
+// import { unstable_cache } from 'next/cache';
 import Content from "@/components/content";
 import { notFound } from 'next/navigation';
 import { getPageData } from "@/actions/pages";
@@ -9,15 +9,19 @@ export default async function Page() {
   
   // Wrap the getPageData call in unstable_cache.
   // Including `slug` in the key ensures each slug gets its own cache entry.
-  const getCachedPageData = unstable_cache(
-    async () => {
-      return await getPageData(process.env.WEBSITE_ID!, "/", 'home');
-    },
-    ['page-data', 'home'],
-    { revalidate: 5 }
-  );
+  // const getCachedPageData = unstable_cache(
+  //   async () => {
+  //     return await getPageData(process.env.WEBSITE_ID!, "/", 'home');
+  //   },
+  //   ['page-data', 'home'],
+  //   { revalidate: 5 }
+  // );
 
-  const { html, css, error } = await getCachedPageData();
+  // const { html, css, error } = await getCachedPageData();
+  const pageData = await getPageData(process.env.WEBSITE_ID!, "/", 'home');
+
+
+  const { html, css, error } = pageData;
 
   if (!html) notFound();
 
