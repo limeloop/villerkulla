@@ -31,7 +31,7 @@ export function FormInterpreter(props: {
   initialData?: { [key: string]: string };
 }) {
   const { form, initialData, schema, submissionId } = props;
-
+  console.log(form, initialData, schema, submissionId);
   const [success, setSuccess] = useState<boolean>(false);
 
   const interpreterStore = useInterpreterStore(formBuilder, schema, {
@@ -107,6 +107,7 @@ export function FormInterpreter(props: {
 
   return (
     <form action="#" onSubmit={() => null} method="post">
+      <p>Formatterd form {form.id}</p>
       <InterpreterEntities
         interpreterStore={interpreterStore}
         components={{

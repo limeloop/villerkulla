@@ -40,6 +40,7 @@ export const Form = ({
           body: JSON.stringify({ formId: id }),
         });
         const result = await data.json();
+        console.log("Form data:", result);
         setForm(result.data);
       } catch (error: unknown) {
         setForm(null);
@@ -98,10 +99,10 @@ export const Form = ({
   }, [id, submissionId]);
 
   if(loading) {
-    return <div>Loading...</div>;
+    return <div>Loading form...</div>;
   }
   if(error) {
-    return <div>Error</div>;
+    return <div>Error loading form</div>;
   }
 
   return (
