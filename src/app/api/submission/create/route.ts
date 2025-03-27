@@ -41,6 +41,8 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
     // Extract formId from the body and treat the remaining properties as submission fields.
     const { formId, ...fields } = body;
 
+    console.log("Received form submission:", { formId, fields });
+
     // Build the payload for the external API.
     const requestData: CreateSubmissionRequestData = {
       websiteId: process.env.WEBSITE_ID || "",
@@ -50,7 +52,7 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
       websiteUrl: process.env.WEBSITE_URL || "",
     };
 
-    // console.log("Sending submission request:", requestData);
+    console.log("Sending submission request:", requestData);
 
     // Forward the data to the external API endpoint.
     const response = await fetch(`${baseUrl}/submission/create`, {
@@ -66,7 +68,7 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
     }
 
     const data = await response.json();
-
+    console.log(data);
     // Return a successful response to the client.
     return NextResponse.json({ ok: true, data });
   } catch (error: unknown) {

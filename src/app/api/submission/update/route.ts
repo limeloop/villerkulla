@@ -51,6 +51,8 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
       websiteUrl: process.env.WEBSITE_URL || "",
     };
 
+    console.log('update submission request data:', requestData);
+
     // Forward the data to the external API endpoint.
     const response = await fetch(`${baseUrl}/submission/update`, {
       method: "POST",
@@ -65,7 +67,8 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
     }
 
     const data = await response.json();
-
+    console.log('update submission response data:', data);
+    
     // Return a successful response to the client.
     return NextResponse.json({ ok: true, data });
   } catch (error: unknown) {

@@ -103,7 +103,7 @@ export function FormInterpreter(props: {
   }
 
   return (
-    <form action="#" onSubmit={() => null}>
+    <form action="#" onSubmit={() => null} method="post">
       <InterpreterEntities
         interpreterStore={interpreterStore}
         components={{

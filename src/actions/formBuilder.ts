@@ -39,10 +39,12 @@ export async function saveSubmission(
         publicKey: publicKey,
         ...validationResult.data,
       };
-      await fetch(
-        `${process.env.WEBSITE_URL}/api/submission/${
+      const url = `${process.env.WEBSITE_URL}/api/submission/${
           submissionId ? "update" : "create"
-        }`,
+        }`;
+      console.log(url);
+      await fetch(
+        url,
         {
           method: "POST",
           headers: {
