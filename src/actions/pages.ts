@@ -15,6 +15,7 @@ export async function getPageData(
         headers: {
           "Content-Type": "application/json",
         },
+        next: { revalidate: 5 },
         body: JSON.stringify({
             website_id: websiteId,
             slug: slug,
