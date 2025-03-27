@@ -130,7 +130,7 @@ export function FormInterpreter(props: {
           onClick={() => submitForm()}
           className="bg-black hover:bg-gray-800 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
         >
-          Submit
+          Submit form
         </button>
         {(submissionId && initialData) && (
         <button

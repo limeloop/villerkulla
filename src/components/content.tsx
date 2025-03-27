@@ -19,7 +19,7 @@ export default function Content({
       if (domNode instanceof Element && domNode.tagName === 'form') {
         //Check if there is a data-form-id="something" attribute
         const formId = domNode.attribs?.['data-form-id'];
-
+        console.log({formId})
         if (formId) {
           // Return your React <Form> component instead of the original <form> node
           return <Form id={Number(formId)} submissionId={submissionId} />;
