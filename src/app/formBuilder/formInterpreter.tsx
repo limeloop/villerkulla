@@ -106,8 +106,7 @@ export function FormInterpreter(props: {
   }
 
   return (
-    <form action="#" onSubmit={() => null} method="post">
-      <p>Formatted form {form.id}</p>
+    <form action="#" onSubmit={() => null} method="post" data-form-id={form.id}>
       <InterpreterEntities
         interpreterStore={interpreterStore}
         components={{
@@ -128,14 +127,14 @@ export function FormInterpreter(props: {
           key='submit'
           type="button"
           onClick={() => submitForm()}
-          className="bg-black hover:bg-gray-800 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+          className="rendevu-submit-button"
         >
-          Submit form
+          Submit
         </button>
         {(submissionId && initialData) && (
         <button
           key='cancel'
-          className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+          className="rendevu-cancel-button"
           type="button"
           onClick={() => cancel()}
         >
