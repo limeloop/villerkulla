@@ -13,9 +13,12 @@ export default function Content({
   submissionId?: number;
 }) {
 
+  console.log(html)
+
   const options = {
     replace: (domNode: DOMNode) => {
       // We only care about <form> tags
+      console.log(domNode instanceof Element ? {tag: domNode.tagName, domNode}: '')
       if (domNode instanceof Element && domNode.tagName === 'form') {
         //Check if there is a data-form-id="something" attribute
         const formId = domNode.attribs?.['data-form-id'];
