@@ -1,0 +1,276 @@
+/* ========= Existing Styles ========= */
+.rendevu-input {
+  display:          flex;                                /* Corresponds to 'flex' */
+  height:           2.5rem;                              /* h-10 */
+  width:            100%;                                /* w-full */
+  border-radius:    0.375rem;                            /* rounded-md */
+  border:           1px solid #d1d5db;                    /* border border-input */
+  background-color: #ffffff;                            /* bg-background */
+  padding-left:     0.75rem;                             /* px-3 */
+  padding-right:    0.75rem;                             /* px-3 */
+  padding-top:      0.5rem;                              /* py-2 */
+  padding-bottom:   0.5rem;                              /* py-2 */
+  font-size:        1rem;                                /* text-base */
+  box-shadow:       none;
+  transition:       background-color 0.2s, color 0.2s;
+}
+
+.rendevu-h1 {
+  font-size: 2em;
+}
+
+.rendevu-input input[type="file"] {
+  border:           0;                                 /* file:border-0 */
+  background-color: transparent;                       /* file:bg-transparent */
+  font-size:        0.875rem;                          /* file:text-sm */
+  font-weight:      500;                               /* file:font-medium */
+  color:            #374151;                           /* file:text-foreground */
+}
+
+.rendevu-input::placeholder {
+  color: #374151;  /* placeholder:text-muted-foreground */
+}
+
+.rendevu-input:focus-visible {
+  outline:      none;                            
+  box-shadow:   0 0 0 1px #2563eb;        
+  border-color: #2563eb;
+}
+
+.rendevu-input:disabled {
+  cursor:  not-allowed;
+  opacity: 0.5;
+}
+
+@media (min-width: 768px) {
+  .rendevu-input {
+    font-size: 0.875rem;  /* md:text-sm */
+  }
+}
+
+.rendevu-label {
+  font-size:   0.875rem;  
+  font-weight: 500;       
+  line-height: 1;
+}
+
+.peer:disabled .rendevu-label {
+  cursor:  not-allowed;
+  opacity: 0.7;
+}
+
+.rendevu-select-option {
+  font-size:   0.875rem;
+  font-weight: 500;
+  line-height: 1;
+}
+
+.rendevu-radio-container {
+  display:     flex;
+  align-items: center;
+  gap:         0.5rem;
+}
+
+.rendevu-radio-input {
+  display:        flex;
+  flex-direction: row;
+}
+
+.rendevu-radio-label {
+  overflow:      hidden;
+  white-space:   nowrap;
+  text-overflow: ellipsis;
+}
+
+.peer:disabled + .rendevu-select-option {
+  cursor:  not-allowed;
+  opacity: 0.7;
+}
+
+.rendevu-instructions {
+  font-size:  0.875rem;
+  font-style: italic;
+}
+
+.rendevu-required-span {
+  margin: 0.5rem;
+}
+
+.rendevu-required-input {
+  width:      1rem;
+  height:     1rem;
+  margin-top: 0.5rem;
+}
+
+.rendevu-textarea {
+  display:          flex;
+  min-height:       80px;
+  width:            100%;
+  border-radius:    0.375rem;
+  border:           1px solid #d1d5db;
+  background-color: #ffffff;
+  padding-left:     0.75rem;
+  padding-right:    0.75rem;
+  padding-top:      0.5rem;
+  padding-bottom:   0.5rem;
+  font-size:        0.875rem;
+  box-shadow:       none;
+}
+
+.rendevu-textarea:focus-visible {
+  outline:    none;
+  box-shadow: 0 0 0 2px #2563eb;
+}
+
+.rendevu-textarea:disabled {
+  cursor:  not-allowed;
+  opacity: 0.5;
+}
+
+.rendevu-options-container {
+  display:         flex;
+  justify-content: space-between;
+  width:           100%;
+  padding-top:     0.5rem;
+}
+
+.rendevu-option {
+  color: #374151;
+}
+
+.rendevu-option:hover {
+  color: #2563eb;
+}
+
+.rendevu-field-entity {
+  margin: 1rem 0;
+  width: 100%;
+}
+
+.rendevu-multi-dropdown-trigger {
+  display:          flex;
+  justify-content:  space-between;
+  width:            600px;
+  min-width:        inherit;
+  height:           2.5rem;
+  padding:          0.5rem 1rem;
+  border:           1px solid #ccc;
+  border-radius:    0.375rem;
+  background-color: #ffffff;
+  cursor:           pointer;
+  transition:       background-color 0.2s, color 0.2s;
+}
+
+.rendevu-multi-dropdown-content {
+  width:           100%;
+  position:        absolute;
+  background-color: white;
+  border:          1px solid #ccc;
+  border-radius:   0.375rem;
+  box-shadow:      0 2px 10px rgba(0, 0, 0, 0.1);
+  z-index:         10;
+  max-height:      200px;
+  overflow-y:      auto;
+}
+
+.rendevu-multi-dropdown-item {
+  display:       flex;
+  align-items:   center;
+  padding:       0.5rem 1rem;
+  cursor:        pointer;
+  width:         100%;
+}
+
+.rendevu-multi-dropdown-item:hover {
+  background-color: #f0f0f0;
+}
+
+input[type="checkbox"] {
+  margin-right: 0.5rem;
+}
+
+.rendevu-submit-button {
+  cursor:       pointer;
+  background:   black;
+  color:        white;
+  padding:      0.5rem 1rem;
+  border:       none;
+  border-radius: 0.375rem;
+  font-size:    0.875rem;
+  font-weight:  500;
+  transition:   background 0.2s, color 0.2s;
+}
+
+/* ========= Additional Utility Classes ========= */
+
+/* Hover & Focus for Buttons */
+.rendevu-submit-button:hover {
+  background: #333;
+}
+
+.rendevu-submit-button:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px #2563eb;
+}
+
+/* Error & Success Messages */
+.rendevu-error {
+  color:      #ff0000;
+  font-size:  0.875rem;
+  margin-top: 0.25rem;
+}
+
+.rendevu-success {
+  color:      #22c55e;
+  font-size:  0.875rem;
+  margin-top: 0.25rem;
+}
+
+/* Form Group / Field Container */
+.rendevu-form-group {
+  margin-bottom: 1rem;
+}
+
+/* Generic Container (e.g., for pages or sections) */
+.rendevu-container {
+  width:       100%;
+  max-width:   1200px;
+  margin:      0 auto;
+  padding:     0 1rem;
+}
+
+/* Hover for Multi-Dropdown Trigger */
+.rendevu-multi-dropdown-trigger:hover {
+  background-color: #f7f7f7;
+}
+
+/* Card Component (e.g., for modals or section wrappers) */
+.rendevu-card {
+  background-color: #ffffff;
+  border:           1px solid #d1d5db;
+  border-radius:    0.375rem;
+  padding:          1rem;
+  box-shadow:       0 2px 10px rgba(0,0,0,0.1);
+}
+
+/* Basic Modal Overlay and Content */
+.rendevu-modal {
+  position:     fixed;
+  top:          0;
+  left:         0;
+  width:        100%;
+  height:       100%;
+  background:   rgba(0, 0, 0, 0.5);
+  display:      flex;
+  justify-content: center;
+  align-items:  center;
+  z-index:      1000;
+}
+
+.rendevu-modal-content {
+  background-color: #ffffff;
+  padding:          2rem;
+  border-radius:    0.5rem;
+  max-width:        600px;
+  width:            100%;
+}

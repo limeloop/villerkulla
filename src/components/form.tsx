@@ -40,7 +40,7 @@ export const Form = ({
           body: JSON.stringify({ formId: id }),
         });
         const result = await data.json();
-        console.log("Form data:", result);
+        // console.log("Form data:", result);
         setForm(result.data);
       } catch (error: unknown) {
         setForm(null);

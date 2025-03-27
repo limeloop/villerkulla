@@ -18,7 +18,7 @@ export default function Content({
   const options = {
     replace: (domNode: DOMNode) => {
       // We only care about <form> tags
-      console.log(domNode instanceof Element, domNode, domNode instanceof Element ? {tag: domNode.tagName, domNode}: '')
+      // console.log(domNode instanceof Element, domNode, domNode instanceof Element ? {tag: domNode.tagName, domNode}: '')
       
       if (
         domNode &&
