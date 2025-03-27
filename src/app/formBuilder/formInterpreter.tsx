@@ -107,7 +107,7 @@ export function FormInterpreter(props: {
 
   return (
     <form action="#" onSubmit={() => null} method="post">
-      <p>Formatterd form {form.id}</p>
+      <p>Formatted form {form.id}</p>
       <InterpreterEntities
         interpreterStore={interpreterStore}
         components={{

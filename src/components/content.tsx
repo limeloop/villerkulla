@@ -18,13 +18,16 @@ export default function Content({
   const options = {
     replace: (domNode: DOMNode) => {
       // We only care about <form> tags
-      console.log(domNode instanceof Element ? {tag: domNode.tagName, domNode}: '')
-      if (domNode instanceof Element && domNode.tagName === 'form') {
-        //Check if there is a data-form-id="something" attribute
-        const formId = domNode.attribs?.['data-form-id'];
-        console.log({formId})
+      console.log(domNode instanceof Element, domNode, domNode instanceof Element ? {tag: domNode.tagName, domNode}: '')
+      
+      if (
+        domNode &&
+        typeof domNode === 'object' &&
+        (domNode as {type: string}).type === 'tag' &&
+        (domNode as {name: string}).name === 'form'
+      ) {
+        const formId = (domNode as {attribs: { [key: string]: string } }).attribs?.['data-form-id'];
         if (formId) {
-          // Return your React <Form> component instead of the original <form> node
           return <Form id={Number(formId)} submissionId={submissionId} />;
         }
       }

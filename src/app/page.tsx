@@ -4,7 +4,7 @@ import { notFound } from 'next/navigation';
 import { getPageData } from "@/actions/pages";
 import VisitorTracker from '@/components/visitor';
 
-export const revalidate = 5; // revalidate at every 5 second
+export const revalidate = 5; // revalidate at every 5 seconds
 export const dynamic = 'force-dynamic';
 
 // This page component uses unstable_cache to cache getPageData for a given slug.
