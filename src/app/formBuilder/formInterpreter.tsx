@@ -77,7 +77,10 @@ export function FormInterpreter(props: {
 
       const params = new URLSearchParams(window.location.search);
       const publicKey = params.get("publicKey");
-    
+      const url = `${process.env.WEBSITE_URL}/api/submission/${
+        submissionId ? "update" : "create"
+      }`;
+      console.log('send submission request to', url);
       const submit = await saveSubmission(
         // @ts-expect-error - `validationResult.data` is a Record<string, string> 
         validationResult.data,
