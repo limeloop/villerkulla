@@ -1,6 +1,6 @@
 // app/[slug]/page.tsx
 'use client'
-import parse, { DOMNode, Element } from 'html-react-parser';
+import parse, { DOMNode } from 'html-react-parser';
 import { Form } from './form';
 
 export default function Content({
