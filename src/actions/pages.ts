@@ -15,7 +15,8 @@ export async function getPageData(
         headers: {
           "Content-Type": "application/json",
         },
-        next: { revalidate: 5 },
+        next: { revalidate: 30 },
+        signal: AbortSignal.timeout(5000),
         body: JSON.stringify({
             website_id: websiteId,
             slug: slug,
