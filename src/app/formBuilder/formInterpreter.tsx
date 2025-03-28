@@ -129,7 +129,7 @@ export function FormInterpreter(props: {
           onClick={() => submitForm()}
           className="rendevu-submit-button"
         >
-          Submit
+          Update submission
         </button>
         {(submissionId && initialData) && (
         <button
@@ -138,7 +138,7 @@ export function FormInterpreter(props: {
           type="button"
           onClick={() => cancel()}
         >
-          Cancel
+          Cancel submission
         </button>)}
       </div>
     </form>
