@@ -25,7 +25,7 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
       throw new Error("Missing WEBSITE_DATA_ENDPOINT in environment variables");
     }
 
-    // console.log("Received visitor data:", body);
+    console.log("Received visitor data:", body);
 
     // Build the request payload for the external visitor tracking API
     const requestData: RequestData = {
@@ -35,8 +35,8 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
       visitorData: body,
     };
 
-    // console.log("Sending request to external API:", requestData);
-
+    console.log("Sending request to external API:", requestData);
+    console.log("Request URL:", `${baseUrl}/analytics/track`);
     // Forward the data to the external API endpoint
     const response = await fetch(`${baseUrl}/analytics/track`, {
       method: "POST",
@@ -51,9 +51,10 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
     }
 
     const data = await response.json();
-
+    console.log("Response from external API:", data);
+    
     // Return a successful response to the client
-    return NextResponse.json({ ok: true, data });
+    return NextResponse.json({ ok: data.ok }, { status: 200 });
   } catch (error: unknown) {
     // Log the error for debugging purposes
     console.error("Error calling analytics create visit endpoint:", error);
