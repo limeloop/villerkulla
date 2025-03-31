@@ -26,7 +26,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        {/* <script src="https://unpkg.com/@tailwindcss/browser@4"></script> */}
+        <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
       </head>
       <body
         // className={`${geistSans.variable} ${geistMono.variable} antialiased`}
