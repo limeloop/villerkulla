@@ -20,16 +20,16 @@ export default {
   //   { pattern: /m[trblxy]?-[0-9]+/ },
   
   //   // Layout & Flex/Grid
-    { pattern: /grid/ },
-    { pattern: /gap-[0-9]+/ },
-    { pattern: /(w|h|max-w)-[a-z0-9/]+/ },
-    { pattern: /flex(-(row|col|wrap|grow))?/ },
-    { pattern: /items-(center|start|end|stretch)/ },
-    { pattern: /justify-(center|between|start|end)/ },
+  //   { pattern: /grid/ },
+  //   { pattern: /gap-[0-9]+/ },
+  //   { pattern: /(w|h|max-w)-[a-z0-9/]+/ },
+  //   { pattern: /flex(-(row|col|wrap|grow))?/ },
+  //   { pattern: /items-(center|start|end|stretch)/ },
+  //   { pattern: /justify-(center|between|start|end)/ },
   
-  //   // Positioning & Z-index
-    { pattern: /absolute/ },
-    { pattern: /relative/ },
+  // //   // Positioning & Z-index
+  //   { pattern: /absolute/ },
+  //   { pattern: /relative/ },
   //   { pattern: /fixed/ },
   //   { pattern: /sticky/ },
   //   { pattern: /top-[0-9]+/ },
