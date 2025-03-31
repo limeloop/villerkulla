@@ -21,11 +21,11 @@ export default {
   
   //   // Layout & Flex/Grid
   //   { pattern: /grid/ },
-  //   { pattern: /gap-[0-9]+/ },
-  //   { pattern: /(w|h|max-w)-[a-z0-9/]+/ },
-  //   { pattern: /flex(-(row|col|wrap|grow))?/ },
-  //   { pattern: /items-(center|start|end|stretch)/ },
-  //   { pattern: /justify-(center|between|start|end)/ },
+    // { pattern: /gap-[0-9]+/ },
+    // { pattern: /(w|h|max-w)-[a-z0-9/]+/ },
+    // { pattern: /flex(-(row|col|wrap|grow))?/ },
+    // { pattern: /items-(center|start|end|stretch)/ },
+    // { pattern: /justify-(center|between|start|end)/ },
   
   // //   // Positioning & Z-index
   //   { pattern: /absolute/ },
