@@ -8,7 +8,7 @@ export async function getPageData(
 
     // Replace with your actual endpoint URL from Site A
     const baseUrl = process.env.WEBSITE_DATA_ENDPOINT;
-    // console.log(baseUrl, websiteId, slug);
+    console.log(`${baseUrl!}/websites/page`, websiteId, slug);
     try {
       const response = await fetch(`${baseUrl!}/websites/page`, {
         method: "POST",
@@ -25,11 +25,12 @@ export async function getPageData(
       });
       
       if (!response.ok) {
+        console.log("🚀 Failed to get website page");
         throw new Error(`HTTP error! status: ${response.status}`);
       }
   
       const data = await response.json();
-      
+      console.log("🚀 ~ file: pages.ts:30 ~ getPageData ~ data:", data);
       // const { html, css } = data;
 
       return data;
