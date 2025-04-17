@@ -17,7 +17,7 @@ export default async function Page() {
       return await getPageData(process.env.WEBSITE_ID!, "/", 'home');
     },
     ['page-data', 'home'],
-    { revalidate: 30}
+    { revalidate: 5}
   );
 
   const { html, css, error } = await getCachedPageData();
