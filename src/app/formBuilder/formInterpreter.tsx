@@ -91,7 +91,7 @@ export function FormInterpreter(props: {
       );
       setSuccess(submit);
     } else {
-      console.error("Validation failed");
+      console.error("Validation failed", validationResult);
       setSuccess(false);
       /*
       | If the validation fails, you can handle the error
@@ -129,7 +129,7 @@ export function FormInterpreter(props: {
           onClick={() => submitForm()}
           className="rendevu-submit-button"
         >
-          Update submission
+          {submissionId ? 'Update' : 'Submit'}
         </button>
         {(submissionId && initialData) && (
         <button
