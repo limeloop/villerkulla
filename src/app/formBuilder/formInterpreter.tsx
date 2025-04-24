@@ -32,6 +32,9 @@ export function FormInterpreter(props: {
 }) {
   const { form, initialData, schema, submissionId } = props;
   console.log(form, initialData, schema, submissionId);
+
+  const [error, setError] = useState<boolean|string>(false);
+  const [loading, setLoading] = useState<boolean>(false);
   const [success, setSuccess] = useState<boolean>(false);
 
   const interpreterStore = useInterpreterStore(formBuilder, schema, {
@@ -49,7 +52,9 @@ export function FormInterpreter(props: {
   });
 
   async function cancel() {
+    setLoading(true);
     if (submissionId) {
+      
       const params = new URLSearchParams(window.location.search);
       const publicKey = params.get("publicKey");
       const submit = await cancelSubmission(submissionId, publicKey);
@@ -58,16 +63,18 @@ export function FormInterpreter(props: {
       console.error("Cancel failed");
       setSuccess(false);
     }
+    setLoading(false);
   }
 
   async function submitForm() {
+    setLoading(true);
+
     /*
     | We validate the values once again on the client
     | to trigger all the validations and provide the user
     | with feedback on what needs to be corrected.
     */
     const validationResult = await interpreterStore.validateEntitiesValues();
-
     if (validationResult.success) {
       /*
       | The schema is valid and can be sent to the server.
@@ -98,28 +105,67 @@ export function FormInterpreter(props: {
       | and provide feedback to the user.
       */
       console.error(validationResult.entitiesErrors);
+
+      setError('Fom validation failed');
     }
+    setLoading(true);
+
+  }
+
+  if(loading) {
+    return (
+      <div className="p-4 mb-4 text-sm text-blue-800 rounded-lg bg-blue-100 border border-blue-300">
+        <svg
+          className="inline mr-2 w-4 h-4 text-blue-500 animate-spin"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
+          <circle className="opacity-25" cx="12" cy="12" r="10" />
+          <path
+            className="opacity-75"
+            d="M4 12a8 8 0 1 1 16 0A8 8 0 0 1 4 12zm2.5-1h11a2.5 2.5 0 1 1-5 0h-6a2.5 2.5 0 0 1-5 0z"
+          />
+        </svg>
+        Loading...
+      </div>
+    );
   }
 
   if (success) {
-    return <div>Success</div>;
+    return (
+      <div className="p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-100 border border-green-300">
+        ✅ Success! Your action was completed.
+      </div>
+    );
+  } else if (error) {
+    return (
+      <div className="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-100 border border-red-300">
+        ❌ Error! Something went wrong. Please try again.
+      </div>
+    );
   }
+  
 
   return (
     <form action="#" onSubmit={() => null} method="post" data-form-id={form.id}>
       <InterpreterEntities
         interpreterStore={interpreterStore}
         components={{
-        textField: TextFieldEntity,
-        emailField: EmailFieldEntity,
-        phoneField: PhoneFieldEntity,
-        checkBoxField: CheckboxFieldEntity,
-        selectField: SelectFieldEntity,
-        multiSelectField: MultiSelectFieldEntity,
-        radioButtonField: RadioButtonFieldEntity,
-        textAreaField: TextAreaFieldEntity,
-        heading1Field: Heading1FieldEntity,
-        paragraphField: ParagraphFieldEntity,
+          textField:  TextFieldEntity,
+          emailField: EmailFieldEntity,
+          phoneField: PhoneFieldEntity,
+          checkBoxField: CheckboxFieldEntity,
+          selectField:   SelectFieldEntity,
+          multiSelectField: MultiSelectFieldEntity,
+          radioButtonField: RadioButtonFieldEntity,
+          textAreaField:  TextAreaFieldEntity,
+          heading1Field:  Heading1FieldEntity,
+          paragraphField: ParagraphFieldEntity
         }}
       />
       <div className="flex justify-between space-x-4 mt-4">
