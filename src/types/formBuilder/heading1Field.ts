@@ -8,6 +8,6 @@ export const heading1FieldEntity = createEntity({
   name: "heading1Field",
   attributes: [contentAttribute],
   validate(value) {
-    return z.string().parse(value);
+    return z.string().optional().parse(value);
   },
 });

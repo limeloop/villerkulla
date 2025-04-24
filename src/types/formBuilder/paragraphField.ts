@@ -8,6 +8,6 @@ export const paragraphFieldEntity = createEntity({
   name: "paragraphField",
   attributes: [contentAttribute],
   validate(value) {
-    return z.string().parse(value);
+    return z.string().optional().parse(value);
   },
 });
